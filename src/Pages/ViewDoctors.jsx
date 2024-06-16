@@ -14,7 +14,7 @@ const Doctors = ({ notify }) => {
   const doctorsPerPage = 5;
   const [doctorData, setdoctorData] = useState([]);
   const [displayedDoctors, setDisplayedDoctors] = useState([]);
-  const [selectedSpecialization, setSelectedSpecialization] = useState("");
+  const [selectedDepartment, setSelectedDepartment] = useState("");
   const isAuthenticated = localStorage.getItem("isAuthenticated");
   const navigate = useNavigate();
 
@@ -42,20 +42,16 @@ const Doctors = ({ notify }) => {
     const indexOfLastDoctor = currentPage * doctorsPerPage;
     const indexOfFirstDoctor = indexOfLastDoctor - doctorsPerPage;
     const filteredDoctors = doctorData.filter((doctor) =>
-      doctor.specialization
-        .toLowerCase()
-        .includes(selectedSpecialization.toLowerCase())
+      doctor.department.toLowerCase().includes(selectedDepartment.toLowerCase())
     );
     setDisplayedDoctors(
       filteredDoctors.slice(indexOfFirstDoctor, indexOfLastDoctor)
     );
-  }, [currentPage, doctorData, selectedSpecialization]);
+  }, [currentPage, doctorData, selectedDepartment]);
 
   const totalPages = Math.ceil(
     doctorData.filter((doctor) =>
-      doctor.specialization
-        .toLowerCase()
-        .includes(selectedSpecialization.toLowerCase())
+      doctor.department.toLowerCase().includes(selectedDepartment.toLowerCase())
     ).length / doctorsPerPage
   );
 
@@ -82,14 +78,14 @@ const Doctors = ({ notify }) => {
     getdata();
   };
 
-  const specializations = [
-    "Cardiologist",
-    "Neurologist",
-    "Pediatrician",
+  const departments = [
+    "Cardiology",
+    "Neurology",
+    "Pediatric",
     "Surgery",
-    "Dermatologist",
-    "Gastroenterologist",
-    "Orthopedist",
+    "Dermatology",
+    "Gastroenterology",
+    "Orthopedic",
   ];
 
   return (
@@ -117,13 +113,11 @@ const Doctors = ({ notify }) => {
                     <div className="float-right relative z-0">
                       <select
                         className="form-select"
-                        value={selectedSpecialization}
-                        onChange={(e) =>
-                          setSelectedSpecialization(e.target.value)
-                        }
+                        value={selectedDepartment}
+                        onChange={(e) => setSelectedDepartment(e.target.value)}
                       >
-                        <option value="">All Specializations</option>
-                        {specializations.map((spec) => (
+                        <option value="">All Departments</option>
+                        {departments.map((spec) => (
                           <option key={spec} value={spec}>
                             {spec}
                           </option>
@@ -156,7 +150,7 @@ const Doctors = ({ notify }) => {
                         <th scope="col">Email</th>
                         <th scope="col">Phone</th>
                         <th scope="col">Gender</th>
-                        <th scope="col">Specialization</th>
+                        <th scope="col">Department</th>
                         <th scope="col">Qualification</th>
                         <th scope="col">Hospital Affiliation</th>
                         <th scope="col">License Number</th>
@@ -176,7 +170,7 @@ const Doctors = ({ notify }) => {
                             <td>{doctor.email}</td>
                             <td>{doctor.phone}</td>
                             <td>{doctor.gender}</td>
-                            <td>{doctor.specialization}</td>
+                            <td>{doctor.department}</td>
                             <td>{doctor.qualification}</td>
                             <td>{doctor.hospitalAffiliation}</td>
                             <td>{doctor.licenseNumber}</td>

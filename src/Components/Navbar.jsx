@@ -9,6 +9,7 @@ import changePasswordSchema from "../Schemas/ChangePasswordSchema";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
+
 // style component
 const customStyles = {
   content: {
@@ -18,6 +19,7 @@ const customStyles = {
     bottom: "auto",
     marginRight: "-50%",
     transform: "translate(-50%, -50%)",
+    zIndex: 9999, // Ensure it's above other elements
   },
 };
 
@@ -36,7 +38,6 @@ const Navbar = () => {
 
   const notify = (message) =>
     toast.success(message, {
-      //Using Toast Emitter for styling configurations
       position: "top-right",
       autoClose: 5000,
       hideProgressBar: false,
@@ -45,9 +46,8 @@ const Navbar = () => {
       draggable: true,
       progress: undefined,
       theme: "light",
-      // transition: Bounce,
     });
-  // Define toast.error function
+
   const errorToast = (message) =>
     toast.error(message, {
       position: "top-right",
@@ -96,19 +96,25 @@ const Navbar = () => {
 
   return (
     <>
-      <div className=" bg-white shadow p-4 flex z-10 justify-between items-center">
+      <div className="bg-white shadow p-4 flex z-10 justify-between items-center">
         <div className="text-xl font-bold">Admin Dashboard</div>
-        <div className="relative ">
+        <div className="relative">
           <button
             onClick={() => setDropdownOpen(!dropdownOpen)}
             className="relative block p-2 bg-gray-800 text-white rounded focus:outline-none"
           >
             {dropdownOpen ? (
-              <i class="fa fa-solid fa-angle-up" style={{ color: "#63E6BE" }}>
+              <i
+                className="fa fa-solid fa-angle-up"
+                style={{ color: "#63E6BE" }}
+              >
                 &nbsp; Admin
               </i>
             ) : (
-              <i class="fa fa-solid fa-angle-down" style={{ color: "#63E6BE" }}>
+              <i
+                className="fa fa-solid fa-angle-down"
+                style={{ color: "#63E6BE" }}
+              >
                 &nbsp; Admin
               </i>
             )}
@@ -142,7 +148,8 @@ const Navbar = () => {
           isOpen={modalIsOpen}
           onRequestClose={closeModal}
           style={customStyles}
-          contentLabel="Example Modal"
+          overlayClassName="modal-backdrop"
+          contentLabel="Change Password Modal"
         >
           <button onClick={closeModal} className="change_password_close">
             <X size={30} />
