@@ -96,7 +96,7 @@ const Dashboard = () => {
                       <div className="row flex-auto mb-4">
                         <div className="col-md-3 flex-auto">
                           <div className="card card-counter primary flex-auto">
-                            <i className="fa fa-solid fa-stethoscope"></i>
+                            <i className="fa fa-user-md"></i>
                             <span className="count-numbers">
                               {doctorsCount}
                             </span>
@@ -106,7 +106,7 @@ const Dashboard = () => {
 
                         <div className="col-md-3 flex-auto">
                           <div className="card card-counter info flex-auto">
-                            <i className="fa fa-solid fa-users"></i>
+                            <i className="fa fa-users"></i>
                             <span className="count-numbers">35</span>
                             <span className="count-name">Patients</span>
                           </div>
@@ -114,17 +114,19 @@ const Dashboard = () => {
 
                         <div className="col-md-3 flex-auto">
                           <div className="card card-counter success flex-auto">
-                            <i className="fa fa-database"></i>
-                            <span className="count-numbers">6875</span>
-                            <span className="count-name">Data</span>
+                            <i className="fa fa-bed"></i>
+                            <span className="count-numbers">120</span>
+                            <span className="count-name">Beds Occupied</span>
                           </div>
                         </div>
 
                         <div className="col-md-3 flex-auto">
                           <div className="card card-counter danger flex-auto">
                             <i className="fa fa-ticket"></i>
-                            <span className="count-numbers">599</span>
-                            <span className="count-name">Users</span>
+                            <span className="count-numbers">75</span>
+                            <span className="count-name">
+                              Appointments Today
+                            </span>
                           </div>
                         </div>
                       </div>
@@ -176,43 +178,6 @@ const Dashboard = () => {
                                 }}
                               />
                             </div>
-                          </div>
-                        </div>
-                      </div>
-
-                      {/* 3rd row */}
-                      <div className="row flex-auto">
-                        <div className="col-md-3 flex-auto">
-                          <div className="card card-counter warning flex-auto">
-                            <i className="fa fa-bed"></i>
-                            <span className="count-numbers">120</span>
-                            <span className="count-name">Beds Occupied</span>
-                          </div>
-                        </div>
-
-                        <div className="col-md-3 flex-auto">
-                          <div className="card card-counter primary flex-auto">
-                            <i className="fa fa-calendar-check"></i>
-                            <span className="count-numbers">75</span>
-                            <span className="count-name">
-                              Appointments Today
-                            </span>
-                          </div>
-                        </div>
-
-                        <div className="col-md-3 flex-auto">
-                          <div className="card card-counter info flex-auto">
-                            <i className="fa fa-procedures"></i>
-                            <span className="count-numbers">25</span>
-                            <span className="count-name">Surgeries Today</span>
-                          </div>
-                        </div>
-
-                        <div className="col-md-3 flex-auto">
-                          <div className="card card-counter danger flex-auto">
-                            <i className="fa fa-user-md"></i>
-                            <span className="count-numbers">50</span>
-                            <span className="count-name">New Patients</span>
                           </div>
                         </div>
                       </div>

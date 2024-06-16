@@ -101,7 +101,7 @@ const Navbar = () => {
         <div className="relative ">
           <button
             onClick={() => setDropdownOpen(!dropdownOpen)}
-            className="relative z-50 block p-2 bg-gray-800 text-white rounded focus:outline-none"
+            className="relative block p-2 bg-gray-800 text-white rounded focus:outline-none"
           >
             {dropdownOpen ? (
               <i class="fa fa-solid fa-angle-up" style={{ color: "#63E6BE" }}>
@@ -137,7 +137,7 @@ const Navbar = () => {
         </div>
       </div>
       {/* Change password modal */}
-      <div className="flex z-20">
+      <div className="flex z-30">
         <Modal
           isOpen={modalIsOpen}
           onRequestClose={closeModal}
