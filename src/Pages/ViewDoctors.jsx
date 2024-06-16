@@ -105,11 +105,12 @@ const Doctors = ({ notify }) => {
                   <div className="col"></div>
                   <div className="col-auto">
                     <button
-                      className="btn btn-success"
+                      className="btn btn-info p-20 rounded-circle"
                       onClick={handleOpen}
-                      style={{ padding: "5px" }}
+                      title="Add doctor"
+                      style={{ width: "70px", height: "70px" }}
                     >
-                      Add Doctor
+                      <i className="fa fa-user-md fa-2x"></i>
                     </button>
                   </div>
                   <div className="col">
