@@ -8,7 +8,7 @@ const EditDoctor = ({ notify }) => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
-  const [specialization, setSpecialization] = useState("");
+  const [department, setDepartment] = useState("");
   const [gender, setGender] = useState("");
   const [qualification, setQualification] = useState("");
   const [experience, setExperience] = useState("");
@@ -32,7 +32,7 @@ const EditDoctor = ({ notify }) => {
       setName(res.data.data.name);
       setEmail(res.data.data.email);
       setPhone(res.data.data.phone);
-      setSpecialization(res.data.data.specialization);
+      setDepartment(res.data.data.department);
       setGender(res.data.data.gender);
       setQualification(res.data.data.qualification);
       setExperience(res.data.data.experience);
@@ -54,7 +54,7 @@ const EditDoctor = ({ notify }) => {
         name: name,
         email: email,
         phone: phone,
-        specialization: specialization,
+        department: department,
         gender: gender,
         qualification: qualification,
         experience: experience,
@@ -76,8 +76,7 @@ const EditDoctor = ({ notify }) => {
     if (name === "") newErrors.name = "Please enter the name";
     if (email === "") newErrors.email = "Please enter the email";
     if (phone === "") newErrors.phone = "Please enter the phone number";
-    if (specialization === "")
-      newErrors.specialization = "Please enter the specialization";
+    if (department === "") newErrors.department = "Please enter the department";
     // if (gender === "") newErrors.gender = "Please enter the gender";
     if (qualification === "")
       newErrors.qualification = "Please enter the qualification";
@@ -88,6 +87,7 @@ const EditDoctor = ({ notify }) => {
       newErrors.licenseNumber = "Please enter the license number";
     if (address === "") newErrors.address = "Please enter the address";
 
+    //set the 'newErrors' object as the value of the 'error' state variable
     setErrors(newErrors);
 
     if (Object.keys(newErrors).length === 0) {
@@ -117,7 +117,7 @@ const EditDoctor = ({ notify }) => {
                 </h1>
                 <div>
                   <div className="form-group">
-                    <label htmlFor="name">Name</label>
+                    <label htmlFor="name">Name*</label>
                     <input
                       className="form-control"
                       id="name"
@@ -130,7 +130,7 @@ const EditDoctor = ({ notify }) => {
                     )}
                   </div>
                   <div className="form-group">
-                    <label htmlFor="email">Email</label>
+                    <label htmlFor="email">Email*</label>
                     <input
                       className="form-control"
                       id="email"
@@ -143,7 +143,7 @@ const EditDoctor = ({ notify }) => {
                     )}
                   </div>
                   <div className="form-group">
-                    <label htmlFor="phone">Phone</label>
+                    <label htmlFor="phone">Phone*</label>
                     <input
                       className="form-control"
                       id="phone"
@@ -156,16 +156,16 @@ const EditDoctor = ({ notify }) => {
                     )}
                   </div>
                   <div className="form-group">
-                    <label htmlFor="specialization">Specialization</label>
+                    <label htmlFor="department">Department*</label>
                     <input
                       className="form-control"
-                      id="specialization"
+                      id="department"
                       type="text"
-                      value={specialization}
-                      onChange={(e) => setSpecialization(e.target.value)}
+                      value={department}
+                      onChange={(e) => setDepartment(e.target.value)}
                     />
-                    {errors.specialization && (
-                      <p className="text-red-500">{errors.specialization}</p>
+                    {errors.department && (
+                      <p className="text-red-500">{errors.department}</p>
                     )}
                   </div>
                   <div className="form-group">
@@ -177,12 +177,12 @@ const EditDoctor = ({ notify }) => {
                       value={gender}
                       onChange={(e) => setGender(e.target.value)}
                     />
-                    {errors.gender && (
+                    {/* {errors.gender && (
                       <p className="text-red-500">{errors.gender}</p>
-                    )}
+                    )} */}
                   </div>
                   <div className="form-group">
-                    <label htmlFor="qualification">Qualification</label>
+                    <label htmlFor="qualification">Qualification*</label>
                     <input
                       className="form-control"
                       id="qualification"
@@ -195,7 +195,7 @@ const EditDoctor = ({ notify }) => {
                     )}
                   </div>
                   <div className="form-group">
-                    <label htmlFor="experience">Experience</label>
+                    <label htmlFor="experience">Experience*</label>
                     <input
                       className="form-control"
                       id="experience"
@@ -209,7 +209,7 @@ const EditDoctor = ({ notify }) => {
                   </div>
                   <div className="form-group">
                     <label htmlFor="hospitalAffiliation">
-                      Hospital Affiliation
+                      Hospital Affiliation*
                     </label>
                     <input
                       className="form-control"
@@ -218,14 +218,14 @@ const EditDoctor = ({ notify }) => {
                       value={hospitalAffiliation}
                       onChange={(e) => setHospitalAffiliation(e.target.value)}
                     />
-                    {errors.hospitalAffiliation && (
+                    {/* {errors.hospitalAffiliation && (
                       <p className="text-red-500">
                         {errors.hospitalAffiliation}
                       </p>
-                    )}
+                    )} */}
                   </div>
                   <div className="form-group">
-                    <label htmlFor="licenseNumber">License Number</label>
+                    <label htmlFor="licenseNumber">License Number*</label>
                     <input
                       className="form-control"
                       id="licenseNumber"
@@ -238,7 +238,7 @@ const EditDoctor = ({ notify }) => {
                     )}
                   </div>
                   <div className="form-group">
-                    <label htmlFor="address">Address</label>
+                    <label htmlFor="address">Address*</label>
                     <input
                       className="form-control"
                       id="address"

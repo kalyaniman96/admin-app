@@ -21,7 +21,7 @@ const Sidebar = () => {
         </div>
         <nav className="flex-1">
           <Link to="/dashboard" className="block px-4 py-2 hover:bg-gray-700">
-            {!isCollapsed && "Dashboard"}
+            {!isCollapsed && "Home"}
           </Link>
           <button
             onClick={() => setDropdownOpen(!dropdownOpen)}

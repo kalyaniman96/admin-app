@@ -32,11 +32,13 @@ const Doctors = ({ notify }) => {
 
   useEffect(() => {
     if (isAuthenticated) {
-      getdata();
+      if (!showModal) {
+        getdata();
+      }
     } else {
       navigate("/");
     }
-  }, [isAuthenticated, navigate]);
+  }, [isAuthenticated, showModal, navigate]);
 
   useEffect(() => {
     const indexOfLastDoctor = currentPage * doctorsPerPage;
@@ -75,7 +77,6 @@ const Doctors = ({ notify }) => {
 
   const handleClose = () => {
     setShowModal(false);
-    getdata();
   };
 
   const departments = [
@@ -84,6 +85,7 @@ const Doctors = ({ notify }) => {
     "Pediatric",
     "Surgery",
     "Dermatology",
+    "Gynecology",
     "Gastroenterology",
     "Orthopedic",
   ];
@@ -117,9 +119,9 @@ const Doctors = ({ notify }) => {
                         onChange={(e) => setSelectedDepartment(e.target.value)}
                       >
                         <option value="">All Departments</option>
-                        {departments.map((spec) => (
-                          <option key={spec} value={spec}>
-                            {spec}
+                        {departments.map((department) => (
+                          <option key={department} value={department}>
+                            {department}
                           </option>
                         ))}
                       </select>
@@ -130,7 +132,10 @@ const Doctors = ({ notify }) => {
                   <>
                     <div className="modal-backdrop">
                       <div className="modal-container">
-                        <AddDoctorModal handleClose={handleClose} />
+                        <AddDoctorModal
+                          handleClose={handleClose}
+                          setShowModal={setShowModal}
+                        />
                       </div>
                     </div>
                   </>

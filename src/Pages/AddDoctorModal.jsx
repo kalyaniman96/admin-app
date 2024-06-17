@@ -7,7 +7,7 @@ import doctorSchema from "../Schemas/DoctorSchema";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-const AddDoctorModal = ({ handleClose }) => {
+const AddDoctorModal = ({ handleClose, setShowModal }) => {
   const notify = (message) =>
     toast.success(message, {
       //Using Toast Emitter for styling configurations
@@ -62,6 +62,7 @@ const AddDoctorModal = ({ handleClose }) => {
       validationSchema: doctorSchema,
       onSubmit: (values) => {
         handleAddDoctor(values);
+        setShowModal(false);
       },
     });
 
@@ -108,10 +109,11 @@ const AddDoctorModal = ({ handleClose }) => {
             onSubmit={handleSubmit}
             className="shadow p-3 mt-5 mb-5 bg-white rounded"
           >
-            <div className="mb-3">
+            <div className="card-title text-center font-bold">
               <h1>Add Doctor</h1>
             </div>
             <div className="mb-3">
+              <label htmlFor="name">Name*</label>
               <input
                 name="name"
                 className={`form-control ${
@@ -128,6 +130,7 @@ const AddDoctorModal = ({ handleClose }) => {
               ) : null}
             </div>
             <div className="mb-3">
+              <label htmlFor="email">Email*</label>
               <input
                 name="email"
                 className={`form-control ${
@@ -144,6 +147,7 @@ const AddDoctorModal = ({ handleClose }) => {
               ) : null}
             </div>
             <div className="mb-3">
+              <label htmlFor="phone">Phone*</label>
               <input
                 name="phone"
                 className={`form-control ${
@@ -160,24 +164,24 @@ const AddDoctorModal = ({ handleClose }) => {
               ) : null}
             </div>
             <div className="mb-3">
+              <label htmlFor="department">Department*</label>
               <input
-                name="specialization"
+                name="department"
                 className={`form-control ${
-                  errors.specialization &&
-                  touched.specialization &&
-                  "is-invalid"
+                  errors.department && touched.department && "is-invalid"
                 }`}
                 type="text"
-                placeholder="Specialization"
-                value={formValues.specialization}
+                placeholder="department"
+                value={formValues.department}
                 onChange={handleInputChange}
                 onBlur={handleBlur}
               />
-              {errors.specialization && touched.specialization ? (
-                <p className="invalid-feedback">{errors.specialization}</p>
+              {errors.department && touched.department ? (
+                <p className="invalid-feedback">{errors.department}</p>
               ) : null}
             </div>
             <div className="mb-3">
+              <label htmlFor="gender">Gender</label>
               <input
                 name="gender"
                 className={`form-control ${
@@ -194,6 +198,7 @@ const AddDoctorModal = ({ handleClose }) => {
               ) : null}
             </div>
             <div className="mb-3">
+              <label htmlFor="qualification">Qualification*</label>
               <input
                 name="qualification"
                 className={`form-control ${
@@ -210,6 +215,7 @@ const AddDoctorModal = ({ handleClose }) => {
               ) : null}
             </div>
             <div className="mb-3">
+              <label htmlFor="experience">Experience*</label>
               <input
                 name="experience"
                 className={`form-control ${
@@ -226,6 +232,7 @@ const AddDoctorModal = ({ handleClose }) => {
               ) : null}
             </div>
             <div className="mb-3">
+              <label htmlFor="hospitalAffiliation">Hospital Affiliation</label>
               <input
                 name="hospitalAffiliation"
                 className={`form-control ${
@@ -244,6 +251,7 @@ const AddDoctorModal = ({ handleClose }) => {
               ) : null}
             </div>
             <div className="mb-3">
+              <label htmlFor="licenseNumber">License Number*</label>
               <input
                 name="licenseNumber"
                 className={`form-control ${
@@ -260,6 +268,7 @@ const AddDoctorModal = ({ handleClose }) => {
               ) : null}
             </div>
             <div className="mb-3">
+              <label htmlFor="address">Address*</label>
               <input
                 name="address"
                 className={`form-control ${
