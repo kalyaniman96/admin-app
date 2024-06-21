@@ -61,7 +61,7 @@ const Sidebar = () => {
               </Link>
               <hr style={{ color: "white" }} />
               <Link
-                to="/patients"
+                to="/viewpatients"
                 className="block px-4 py-2 text-green-300 hover:bg-gray-700"
               >
                 Patients

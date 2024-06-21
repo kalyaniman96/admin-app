@@ -9,7 +9,8 @@ import Profile from "./Pages/Profile";
 import ChangePassword from "./Pages/ChangePassword";
 import ViewDoctors from "./Pages/ViewDoctors";
 import EditDoctor from "./Pages/EditDoctor";
-import Patients from "./Pages/Patients";
+import ViewPatients from "./Pages/ViewPatients";
+import EditPatient from "./Pages/EditPatient";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -77,8 +78,12 @@ const App = () => {
             element={<EditDoctor notify={notify} errorToast={errorToast} />}
           ></Route>
           <Route
-            path="/patients"
-            element={<Patients notify={notify} errorToast={errorToast} />}
+            path="/viewpatients"
+            element={<ViewPatients notify={notify} errorToast={errorToast} />}
+          ></Route>
+          <Route
+            path="/editpatient"
+            element={<EditPatient notify={notify} errorToast={errorToast} />}
           ></Route>
         </Routes>
       </Router>

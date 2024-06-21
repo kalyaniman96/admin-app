@@ -3,11 +3,11 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useFormik } from "formik";
 import { X } from "lucide-react";
-import doctorSchema from "../Schemas/DoctorSchema";
+import patientSchema from "../Schemas/PatientSchema";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-const AddDoctorModal = ({ handleClose, setShowModal }) => {
+const AddPatientModal = ({ handleClose, setShowModal }) => {
   const notify = (message) =>
     toast.success(message, {
       //Using Toast Emitter for styling configurations
@@ -38,13 +38,13 @@ const AddDoctorModal = ({ handleClose, setShowModal }) => {
     name: "",
     email: "",
     phone: "",
-    specialization: "",
+    department: "",
     gender: "",
-    qualification: "",
-    experience: "",
-    hospitalAffiliation: "",
-    licenseNumber: "",
-    address: "",
+    medicalHistory: "",
+    currentMedications: "",
+    emergencyContactName: "",
+    emergencyContactNumber: "",
+    emergencyContactRelation: "",
   });
 
   const isAuthenticated = localStorage.getItem("isAuthenticated");
@@ -59,18 +59,18 @@ const AddDoctorModal = ({ handleClose, setShowModal }) => {
   const { errors, touched, handleBlur, handleChange, handleSubmit, resetForm } =
     useFormik({
       initialValues: formValues,
-      validationSchema: doctorSchema,
+      validationSchema: patientSchema,
       onSubmit: (values) => {
-        handleAddDoctor(values);
+        handleAddPatient(values);
         setShowModal(false);
       },
     });
 
-  const handleAddDoctor = async (userdata) => {
+  const handleAddPatient = async (userdata) => {
     try {
       console.log("Form Values:", userdata); // Debug: log form values
 
-      const res = await axios.post("/doctor/create", userdata, {
+      const res = await axios.post("/patient/create", userdata, {
         headers: {
           "Content-Type": "application/json",
         },
@@ -79,12 +79,12 @@ const AddDoctorModal = ({ handleClose, setShowModal }) => {
       console.log("API response", res);
 
       if (res.status === 200) {
-        notify("New doctor added successfully");
+        notify("New patient added successfully");
         resetForm();
       }
     } catch (error) {
-      console.error("Error adding user:", error);
-      errorToast("Failed to add user");
+      console.error("Error adding patient:", error);
+      errorToast("Failed to add new patient");
     }
   };
 
@@ -120,7 +120,7 @@ const AddDoctorModal = ({ handleClose, setShowModal }) => {
             // }}
           >
             <div className="card-title text-center font-bold">
-              <h1>Add Doctor</h1>
+              <h1>Add Patient</h1>
             </div>
             <div className="mb-3">
               <label htmlFor="name">Name*</label>
@@ -174,23 +174,6 @@ const AddDoctorModal = ({ handleClose, setShowModal }) => {
               ) : null}
             </div>
             <div className="mb-3">
-              <label htmlFor="department">Department*</label>
-              <input
-                name="department"
-                className={`form-control ${
-                  errors.department && touched.department && "is-invalid"
-                }`}
-                type="text"
-                placeholder="department"
-                value={formValues.department}
-                onChange={handleInputChange}
-                onBlur={handleBlur}
-              />
-              {errors.department && touched.department ? (
-                <p className="invalid-feedback">{errors.department}</p>
-              ) : null}
-            </div>
-            <div className="mb-3">
               <label htmlFor="gender">Gender</label>
               <input
                 name="gender"
@@ -208,90 +191,129 @@ const AddDoctorModal = ({ handleClose, setShowModal }) => {
               ) : null}
             </div>
             <div className="mb-3">
-              <label htmlFor="qualification">Qualification*</label>
+              <label htmlFor="department">Department*</label>
               <input
-                name="qualification"
+                name="department"
                 className={`form-control ${
-                  errors.qualification && touched.qualification && "is-invalid"
+                  errors.department && touched.department && "is-invalid"
                 }`}
                 type="text"
-                placeholder="Qualification"
-                value={formValues.qualification}
+                placeholder="department"
+                value={formValues.department}
                 onChange={handleInputChange}
                 onBlur={handleBlur}
               />
-              {errors.qualification && touched.qualification ? (
-                <p className="invalid-feedback">{errors.qualification}</p>
+              {errors.department && touched.department ? (
+                <p className="invalid-feedback">{errors.department}</p>
               ) : null}
             </div>
             <div className="mb-3">
-              <label htmlFor="experience">Experience*</label>
+              <label htmlFor="medicalHistory">Medical history*</label>
               <input
-                name="experience"
+                name="medicalHistory"
                 className={`form-control ${
-                  errors.experience && touched.experience && "is-invalid"
-                }`}
-                type="text"
-                placeholder="Experience"
-                value={formValues.experience}
-                onChange={handleInputChange}
-                onBlur={handleBlur}
-              />
-              {errors.experience && touched.experience ? (
-                <p className="invalid-feedback">{errors.experience}</p>
-              ) : null}
-            </div>
-            <div className="mb-3">
-              <label htmlFor="hospitalAffiliation">Hospital Affiliation</label>
-              <input
-                name="hospitalAffiliation"
-                className={`form-control ${
-                  errors.hospitalAffiliation &&
-                  touched.hospitalAffiliation &&
+                  errors.medicalHistory &&
+                  touched.medicalHistory &&
                   "is-invalid"
                 }`}
                 type="text"
-                placeholder="Hospital affiliation"
-                value={formValues.hospitalAffiliation}
+                placeholder="Medical history"
+                value={formValues.medicalHistory}
                 onChange={handleInputChange}
                 onBlur={handleBlur}
               />
-              {errors.hospitalAffiliation && touched.hospitalAffiliation ? (
-                <p className="invalid-feedback">{errors.hospitalAffiliation}</p>
+              {errors.medicalHistory && touched.medicalHistory ? (
+                <p className="invalid-feedback">{errors.medicalHistory}</p>
               ) : null}
             </div>
             <div className="mb-3">
-              <label htmlFor="licenseNumber">License Number*</label>
+              <label htmlFor="currentMedications">Current Medications*</label>
               <input
-                name="licenseNumber"
+                name="currentMedications"
                 className={`form-control ${
-                  errors.licenseNumber && touched.licenseNumber && "is-invalid"
+                  errors.currentMedications &&
+                  touched.currentMedications &&
+                  "is-invalid"
                 }`}
                 type="text"
-                placeholder="License number"
-                value={formValues.licenseNumber}
+                placeholder="Current Medications"
+                value={formValues.currentMedications}
                 onChange={handleInputChange}
                 onBlur={handleBlur}
               />
-              {errors.licenseNumber && touched.licenseNumber ? (
-                <p className="invalid-feedback">{errors.licenseNumber}</p>
+              {errors.currentMedications && touched.currentMedications ? (
+                <p className="invalid-feedback">{errors.currentMedications}</p>
               ) : null}
             </div>
             <div className="mb-3">
-              <label htmlFor="address">Address*</label>
+              <label htmlFor="emergencyContactName">
+                Emergency Contact Name
+              </label>
               <input
-                name="address"
+                name="emergencyContactName"
                 className={`form-control ${
-                  errors.address && touched.address && "is-invalid"
+                  errors.emergencyContactName &&
+                  touched.emergencyContactName &&
+                  "is-invalid"
                 }`}
                 type="text"
-                placeholder="Address"
-                value={formValues.address}
+                placeholder="Emergency Contact Name"
+                value={formValues.emergencyContactName}
                 onChange={handleInputChange}
                 onBlur={handleBlur}
               />
-              {errors.address && touched.address ? (
-                <p className="invalid-feedback">{errors.address}</p>
+              {errors.emergencyContactName && touched.emergencyContactName ? (
+                <p className="invalid-feedback">
+                  {errors.emergencyContactName}
+                </p>
+              ) : null}
+            </div>
+            <div className="mb-3">
+              <label htmlFor="emergencyContactPhone">
+                Emergency contact number*
+              </label>
+              <input
+                name="emergencyContactNumber"
+                className={`form-control ${
+                  errors.emergencyContactNumber &&
+                  touched.emergencyContactNumber &&
+                  "is-invalid"
+                }`}
+                type="text"
+                placeholder="Emergency contact number"
+                value={formValues.emergencyContactNumber}
+                onChange={handleInputChange}
+                onBlur={handleBlur}
+              />
+              {errors.emergencyContactNumber &&
+              touched.emergencyContactNumber ? (
+                <p className="invalid-feedback">
+                  {errors.emergencyContactNumber}
+                </p>
+              ) : null}
+            </div>
+            <div className="mb-3">
+              <label htmlFor="emergencyContactRelation">
+                Emergency contact relation*
+              </label>
+              <input
+                name="emergencyContactRelation"
+                className={`form-control ${
+                  errors.emergencyContactRelation &&
+                  touched.emergencyContactRelation &&
+                  "is-invalid"
+                }`}
+                type="text"
+                placeholder="Emergency contact relation"
+                value={formValues.emergencyContactRelation}
+                onChange={handleInputChange}
+                onBlur={handleBlur}
+              />
+              {errors.emergencyContactRelation &&
+              touched.emergencyContactRelation ? (
+                <p className="invalid-feedback">
+                  {errors.emergencyContactRelation}
+                </p>
               ) : null}
             </div>
             <div className="mb-3">
@@ -306,4 +328,4 @@ const AddDoctorModal = ({ handleClose, setShowModal }) => {
   );
 };
 
-export default AddDoctorModal;
+export default AddPatientModal;

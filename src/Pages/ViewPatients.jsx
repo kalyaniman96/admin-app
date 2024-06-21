@@ -6,25 +6,25 @@ import ResponsivePagination from "react-responsive-pagination";
 import "react-responsive-pagination/themes/classic.css";
 import Sidebar from "../Components/Sidebar";
 import Navbar from "../Components/Navbar";
-import AddDoctorModal from "./AddDoctorModal";
+import AddPatientModal from "./AddPatientModal";
 
 const Doctors = ({ notify }) => {
   const [showModal, setShowModal] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
-  const doctorsPerPage = 5;
-  const [doctorData, setdoctorData] = useState([]);
-  const [displayedDoctors, setDisplayedDoctors] = useState([]);
+  const patientsPerPage = 5;
+  const [displayedPatients, setDisplayedPatients] = useState([]);
+  const [patientData, setPatientData] = useState([]);
   const [selectedDepartment, setSelectedDepartment] = useState("");
   const isAuthenticated = localStorage.getItem("isAuthenticated");
   const navigate = useNavigate();
 
   const getdata = async () => {
     try {
-      const res = await axios.get(`/doctor/getdata`);
+      const res = await axios.get(`/patient/getdata`);
       console.log("+++ API response", res);
 
-      setdoctorData(res.data.data);
-      console.log("++++ All doctor data :", doctorData);
+      setPatientData(res.data.data);
+      console.log("++++ All patient data :", patientData);
     } catch (error) {
       console.log("+++ Error while fetching data: ", error);
     }
@@ -41,33 +41,37 @@ const Doctors = ({ notify }) => {
   }, [isAuthenticated, showModal, navigate]);
 
   useEffect(() => {
-    const indexOfLastDoctor = currentPage * doctorsPerPage;
-    const indexOfFirstDoctor = indexOfLastDoctor - doctorsPerPage;
-    const filteredDoctors = doctorData.filter((doctor) =>
-      doctor.department.toLowerCase().includes(selectedDepartment.toLowerCase())
+    const indexOfLastPatient = currentPage * patientsPerPage;
+    const indexOfFirstPatient = indexOfLastPatient - patientsPerPage;
+    const filteredPatients = patientData.filter((patient) =>
+      patient.department
+        .toLowerCase()
+        .includes(selectedDepartment.toLowerCase())
     );
-    setDisplayedDoctors(
-      filteredDoctors.slice(indexOfFirstDoctor, indexOfLastDoctor)
+    setDisplayedPatients(
+      filteredPatients.slice(indexOfFirstPatient, indexOfLastPatient)
     );
-  }, [currentPage, doctorData, selectedDepartment]);
+  }, [currentPage, patientData, selectedDepartment]);
 
   const totalPages = Math.ceil(
-    doctorData.filter((doctor) =>
-      doctor.department.toLowerCase().includes(selectedDepartment.toLowerCase())
-    ).length / doctorsPerPage
+    patientData.filter((patient) =>
+      patient.department
+        .toLowerCase()
+        .includes(selectedDepartment.toLowerCase())
+    ).length / patientsPerPage
   );
 
-  const deleteDoctor = async (id) => {
+  const deletePatient = async (id) => {
     if (window.confirm("Are you sure you want to delete this data?")) {
-      const res = await axios.delete(`/doctor/delete/${id}`);
+      const res = await axios.delete(`/patient/delete/${id}`);
       notify("Data deleted successfully");
       console.log("+++ API response", res);
       getdata();
     }
   };
 
-  const editDoctor = (id) => {
-    navigate("/editdoctor", { state: { doctorid: id } });
+  const editPatient = (id) => {
+    navigate("/editpatient", { state: { doctorid: id } });
   };
 
   //modal handling
@@ -105,10 +109,10 @@ const Doctors = ({ notify }) => {
                     <button
                       className="btn btn-info p-20 rounded-circle"
                       onClick={handleOpen}
-                      title="Add doctor"
+                      title="Add patient"
                       style={{ width: "70px", height: "70px" }}
                     >
-                      <i className="fa fa-user-md fa-2x"></i>
+                      <i className="fa fa-user fa-2x"></i>
                     </button>
                   </div>
                   <div className="col">
@@ -118,7 +122,7 @@ const Doctors = ({ notify }) => {
                         value={selectedDepartment}
                         onChange={(e) => setSelectedDepartment(e.target.value)}
                       >
-                        <option value="">All Departments</option>
+                        <option value="">Patients by department</option>
                         {departments.map((department) => (
                           <option key={department} value={department}>
                             {department}
@@ -132,7 +136,7 @@ const Doctors = ({ notify }) => {
                   <>
                     <div className="modal-backdrop">
                       <div className="modal-container">
-                        <AddDoctorModal
+                        <AddPatientModal
                           handleClose={handleClose}
                           setShowModal={setShowModal}
                         />
@@ -156,47 +160,51 @@ const Doctors = ({ notify }) => {
                         <th scope="col">Phone</th>
                         <th scope="col">Gender</th>
                         <th scope="col">Department</th>
-                        <th scope="col">Qualification</th>
-                        <th scope="col">Hospital Affiliation</th>
-                        <th scope="col">License Number</th>
-                        <th scope="col">Address</th>
-                        <th scope="col">Created At</th>
+                        <th scope="col">Medical History</th>
+                        <th scope="col">Current Medications</th>
+                        <th scope="col">Emergency Contact Name</th>
+                        <th scope="col">Emergency Contact Number</th>
+                        <th scope="col">Emergency Contact Relation</th>
+                        <th scope="col">Created on</th>
                         <th scope="col">Action</th>
                       </tr>
                     </thead>
                     <tbody>
-                      {displayedDoctors.length > 0 ? (
-                        displayedDoctors.map((doctor, index) => (
-                          <tr key={doctor._id}>
+                      {displayedPatients.length > 0 ? (
+                        displayedPatients.map((patient, index) => (
+                          <tr key={patient._id}>
                             <th scope="row">
-                              {index + 1 + (currentPage - 1) * doctorsPerPage}
+                              {index + 1 + (currentPage - 1) * patientsPerPage}
                             </th>
-                            <td>{doctor.name}</td>
-                            <td>{doctor.email}</td>
-                            <td>{doctor.phone}</td>
-                            <td>{doctor.gender}</td>
-                            <td>{doctor.department}</td>
-                            <td>{doctor.qualification}</td>
-                            <td>{doctor.hospitalAffiliation}</td>
-                            <td>{doctor.licenseNumber}</td>
-                            <td>{doctor.address}</td>
+                            <td>{patient.name}</td>
+                            <td>{patient.email}</td>
+                            <td>{patient.phone}</td>
+                            <td>{patient.gender}</td>
+                            <td>{patient.department}</td>
+                            <td>{patient.medicalHistory}</td>
+                            <td>{patient.currentMedications}</td>
+                            <td>{patient.emergencyContactName}</td>
+                            <td>{patient.emergencyContactNumber}</td>
+                            <td>{patient.emergencyContactRelation}</td>
                             <td>
-                              {dateFormat(doctor.createdAt, "dd/mm/yyyy")}
+                              {dateFormat(patient.createdAt, "dd/mm/yyyy")}
                             </td>
                             <td>
-                              <button
-                                className="btn btn-sm btn-warning m-1"
-                                onClick={() => editDoctor(doctor._id)}
-                              >
-                                <i className="bi bi-pencil-square"></i>
-                              </button>
+                              <div>
+                                <button
+                                  className="btn btn-sm btn-warning m-1"
+                                  onClick={() => editPatient(patient._id)}
+                                >
+                                  <i className="bi bi-pencil-square"></i>
+                                </button>
 
-                              <button
-                                className="btn btn-sm btn-danger m-1"
-                                onClick={() => deleteDoctor(doctor._id)}
-                              >
-                                <i className="bi bi-trash"></i>
-                              </button>
+                                <button
+                                  className="btn btn-sm btn-danger m-1 "
+                                  onClick={() => deletePatient(patient._id)}
+                                >
+                                  <i className="bi bi-trash"></i>
+                                </button>
+                              </div>
                             </td>
                           </tr>
                         ))

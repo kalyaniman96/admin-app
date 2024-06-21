@@ -25,6 +25,10 @@
   transform: translateY(-3px) translateZ(10px);
 }
 
+.button-group .btn {
+  margin: 0 5px; /* Adjust margin as needed for spacing */
+}
+
 .card {
   background-color: aliceblue;
   transition: transform 0.3s ease;
