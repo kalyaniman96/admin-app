@@ -63,6 +63,14 @@ const ForgotPassword = () => {
         </form>
         {message && <div className="alert alert-success mt-3">{message}</div>}
         {error && <div className="alert alert-danger mt-3">{error}</div>}
+
+        <div className="row d-flex justify-content-between mt-1">
+          <div className="col-auto">
+            <button onClick={() => navigate("/")}>
+              <i className="fa fa-sm fa-arrow-left"> Login</i>
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   );

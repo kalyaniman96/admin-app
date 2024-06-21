@@ -102,10 +102,10 @@ const AddDoctorModal = ({ handleClose, setShowModal }) => {
       <ToastContainer />
       <div
         className="row justify-content-center"
-        style={{
-          maxHeight: "700px",
-          overflow: "auto",
-        }}
+        // style={{
+        //   maxHeight: "700px",
+        //   overflow: "auto",
+        // }}
       >
         <div className="col-md-4 mt-10">
           <button className="float-right" onClick={handleClose}>
@@ -114,10 +114,10 @@ const AddDoctorModal = ({ handleClose, setShowModal }) => {
           <form
             onSubmit={handleSubmit}
             className="shadow p-3 mt-5 mb-5 bg-white rounded"
-            // style={{
-            //   maxHeight: "800px",
-            //   overflow: "auto",
-            // }}
+            style={{
+              maxHeight: "550px",
+              overflow: "auto",
+            }}
           >
             <div className="card-title text-center font-bold">
               <h1>Add Doctor</h1>
