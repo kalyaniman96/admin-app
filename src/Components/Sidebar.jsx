@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
 const Sidebar = () => {
@@ -8,6 +8,12 @@ const Sidebar = () => {
   const toggleSidebar = () => {
     setIsCollapsed(!isCollapsed);
   };
+
+  useEffect(() => {
+    if (isCollapsed) {
+      setDropdownOpen(false);
+    }
+  }, [isCollapsed]);
 
   return (
     <div className={`flex`}>
@@ -65,6 +71,12 @@ const Sidebar = () => {
                 className="block px-4 py-2 text-green-300 hover:bg-gray-700"
               >
                 Patients
+              </Link>
+              <Link
+                to="/viewdepartments"
+                className="block px-4 py-2 text-green-300 hover:bg-gray-700"
+              >
+                Departments
               </Link>
             </div>
           )}

@@ -1,12 +1,12 @@
 import React, { useState } from "react";
-import { useNavigate, link, Link } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { useFormik } from "formik";
 import loginSchema from "../Schemas/LoginSchema";
 import axios from "axios";
 
 const Login = ({ notify, errorToast }) => {
   const [togglePassword, setTogglePassword] = useState(true);
-  //   console.log(togglePassword);
+
   const navigate = useNavigate();
 
   const initialValues = {
@@ -36,7 +36,6 @@ const Login = ({ notify, errorToast }) => {
         navigate("/dashboard", {
           state: {
             userId: res.data.logindata._id,
-            totalDoctors: res.data.totalDoctors,
           },
         });
         notify(res.data.message);

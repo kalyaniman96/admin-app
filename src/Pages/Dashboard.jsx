@@ -5,23 +5,23 @@ import Navbar from "../Components/Navbar";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Bar, Pie } from "react-chartjs-2";
 import Chart from "chart.js/auto";
+import Loader from "../Components/Loader";
 
 const Dashboard = () => {
   const [userData, setUserData] = useState({});
   const [doctorsCount, setDoctorsCount] = useState();
+  const [patientsCount, setPatientsCount] = useState();
   const [isLoading, setIsLoading] = useState(true);
   const id = localStorage.getItem("user ID");
   const isAuthenticated = localStorage.getItem("isAuthenticated");
-  const location = useLocation();
   const navigate = useNavigate();
-  const totalDoctors = location.state?.totalDoctors;
-  console.log(totalDoctors);
 
   const getData = async () => {
     const res = await axios.get(`admin/getdata/${id}`);
     console.log("+++ API response", res.data);
     setUserData(res.data.userData);
     setDoctorsCount(res.data.totalDoctors);
+    setPatientsCount(res.data.totalPatients);
     if (res.data) {
       setIsLoading(false);
     }
@@ -81,8 +81,19 @@ const Dashboard = () => {
       {isAuthenticated ? (
         <div>
           {isLoading ? (
-            <div>
-              <p>Loading...</p>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                width: "100vw",
+                height: "100vh",
+                position: "absolute",
+                top: 0,
+                left: 0,
+              }}
+            >
+              <Loader />
             </div>
           ) : (
             <div>
@@ -107,7 +118,9 @@ const Dashboard = () => {
                         <div className="col-md-3 flex-auto">
                           <div className="card card-counter info flex-auto">
                             <i className="fa fa-users"></i>
-                            <span className="count-numbers">35</span>
+                            <span className="count-numbers">
+                              {patientsCount}
+                            </span>
                             <span className="count-name">Patients</span>
                           </div>
                         </div>

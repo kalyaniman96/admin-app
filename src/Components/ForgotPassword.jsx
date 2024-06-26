@@ -38,7 +38,7 @@ const ForgotPassword = () => {
   };
 
   return (
-    <div className="d-flex justify-content-center align-items-center min-vh-100">
+    <div className=" container-fluid d-flex justify-content-center align-items-center min-vh-100">
       <div className="card p-4" style={{ maxWidth: "400px", width: "100%" }}>
         <h2 className="card-title text-center font-bold">Forgot Password</h2>
         <form onSubmit={handleSubmit}>

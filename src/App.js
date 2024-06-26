@@ -6,11 +6,11 @@ import ForgotPassword from "./Components/ForgotPassword";
 import ResetPassword from "./Components/ResetPassword";
 import Dashboard from "./Pages/Dashboard";
 import Profile from "./Pages/Profile";
-import ChangePassword from "./Pages/ChangePassword";
 import ViewDoctors from "./Pages/ViewDoctors";
 import EditDoctor from "./Pages/EditDoctor";
 import ViewPatients from "./Pages/ViewPatients";
 import EditPatient from "./Pages/EditPatient";
+import ViewDepartments from "./Pages/ViewDepartments";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -56,10 +56,6 @@ const App = () => {
             element={<Dashboard notify={notify} errorToast={errorToast} />}
           ></Route>
           <Route
-            path="/changepassword/:id"
-            element={<ChangePassword notify={notify} errorToast={errorToast} />}
-          ></Route>
-          <Route
             path="/forgotpassword"
             element={<ForgotPassword notify={notify} errorToast={errorToast} />}
           ></Route>
@@ -84,6 +80,12 @@ const App = () => {
           <Route
             path="/editpatient"
             element={<EditPatient notify={notify} errorToast={errorToast} />}
+          ></Route>
+          <Route
+            path="/viewdepartments"
+            element={
+              <ViewDepartments notify={notify} errorToast={errorToast} />
+            }
           ></Route>
         </Routes>
       </Router>
