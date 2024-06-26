@@ -2,14 +2,16 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import dateFormat from "dateformat";
-import ResponsivePagination from "react-responsive-pagination";
-import "react-responsive-pagination/themes/classic.css";
 import Sidebar from "../Components/Sidebar";
 import Navbar from "../Components/Navbar";
 import { useFormik } from "formik";
 import { X } from "lucide-react";
 import doctorSchema from "../Schemas/DoctorSchema";
 import Loader from "../Components/Loader";
+import ResponsivePagination from "react-responsive-pagination";
+import "react-responsive-pagination/themes/classic.css";
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
 
 const ViewDoctors = ({ notify, errorToast }) => {
   const [showModal, setShowModal] = useState(false);
@@ -62,13 +64,33 @@ const ViewDoctors = ({ notify, errorToast }) => {
     ).length / doctorsPerPage
   );
 
+  // react sweet alert box
+  const MySwal = withReactContent(Swal);
+
   const deleteDoctor = async (id) => {
-    if (window.confirm("Are you sure you want to delete this data?")) {
-      const res = await axios.delete(`/doctor/delete/${id}`);
-      console.log("+++ API response", res);
-      notify(res.data.message);
-      getdata();
-    }
+    MySwal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          const res = await axios.delete(`/doctor/delete/${id}`);
+          console.log("+++ API response after delete doctor: ", res);
+          if (res.status === 200) {
+            notify(res.data.message);
+          }
+          getdata();
+        } catch (error) {
+          console.log("+++ Error while deleting data: ", error);
+        }
+        MySwal.fire("Deleted!", "The doctor has been deleted.", "success");
+      }
+    });
   };
 
   const editDoctor = (id) => {
@@ -535,7 +557,7 @@ const ViewDoctors = ({ notify, errorToast }) => {
                             <th scope="col">Hospital Affiliation</th>
                             <th scope="col">License Number</th>
                             <th scope="col">Address</th>
-                            <th scope="col">Created At</th>
+                            <th scope="col">Created on</th>
                             <th scope="col">Action</th>
                           </tr>
                         </thead>

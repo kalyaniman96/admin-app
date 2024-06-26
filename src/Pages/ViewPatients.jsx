@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import Sidebar from "../Components/Sidebar";
+import Navbar from "../Components/Navbar";
 import dateFormat from "dateformat";
 import { useFormik } from "formik";
 import { X } from "lucide-react";
 import patientSchema from "../Schemas/PatientSchema";
 import ResponsivePagination from "react-responsive-pagination";
 import "react-responsive-pagination/themes/classic.css";
-import Sidebar from "../Components/Sidebar";
-import Navbar from "../Components/Navbar";
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
 
 const ViewPatients = ({ notify, errorToast }) => {
   const [showModal, setShowModal] = useState(false);
@@ -58,17 +60,33 @@ const ViewPatients = ({ notify, errorToast }) => {
         .includes(selectedDepartment.toLowerCase())
     ).length / patientsPerPage
   );
+  // react sweet alert box
+  const MySwal = withReactContent(Swal);
 
   const deletePatient = async (id) => {
-    if (window.confirm("Are you sure you want to delete this data?")) {
-      const res = await axios.delete(`/patient/delete/${id}`);
-
-      console.log("+++ API response after delete patient: ", res);
-      if (res.status === 200) {
-        notify(res.data.message);
+    MySwal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          const res = await axios.delete(`/patient/delete/${id}`);
+          console.log("+++ API response after delete patient: ", res);
+          if (res.status === 200) {
+            notify(res.data.message);
+          }
+          getdata();
+        } catch (error) {
+          console.log("+++ Error while deleting data: ", error);
+        }
+        MySwal.fire("Deleted!", "The patient has been deleted.", "success");
       }
-      getdata();
-    }
+    });
   };
 
   const editPatient = (id) => {
@@ -540,7 +558,7 @@ const ViewPatients = ({ notify, errorToast }) => {
                                   className="btn btn-sm btn-danger m-1 "
                                   onClick={() => deletePatient(patient._id)}
                                 >
-                                  <i className="bi bi-trash"></i>
+                                  <i className=" bi bi-trash"></i>
                                 </button>
                               </div>
                             </td>
