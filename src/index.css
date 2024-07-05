@@ -117,3 +117,14 @@
   user-select: none;
   opacity: 0.5;
 } */
+
+.button-link {
+  color: blue;
+  text-decoration: none;
+  cursor: pointer;
+  transition: border-color 0.2s ease;
+}
+
+.button-link:hover {
+  border-bottom: 1px solid blue;
+}

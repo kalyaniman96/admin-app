@@ -1,82 +1,62 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
-import dateFormat from "dateformat";
-import Sidebar from "../Components/Sidebar";
-import Navbar from "../Components/Navbar";
-import { useFormik } from "formik";
-import { X } from "lucide-react";
-import doctorSchema from "../Schemas/DoctorSchema";
-import Loader from "../Components/Loader";
+import { useNavigate, useLocation } from "react-router-dom";
 import ResponsivePagination from "react-responsive-pagination";
 import "react-responsive-pagination/themes/classic.css";
+import Sidebar from "../Components/Sidebar";
+import Navbar from "../Components/Navbar";
+import Loader from "../Components/Loader";
+import doctorSchema from "../Schemas/DoctorSchema";
+import { useFormik } from "formik";
+import { X } from "lucide-react";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 
-const ViewDoctors = ({ notify, errorToast }) => {
-  const [arrayvalue, setArrayvalue] = useState([
-    {
-      id: 1,
-      name: "a",
-    },
-    {
-      id: 2,
-      name: "b",
-    },
-    {
-      id: 3,
-      name: "c",
-    },
-  ]);
+const DoctorsByDepartment = ({ notify, errorToast }) => {
   const [showModal, setShowModal] = useState(false);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [isLoading, setIsLoading] = useState(false);
-  const doctorsPerPage = 5;
-  const [doctorData, setdoctorData] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [doctorsData, setDoctorsData] = useState([]);
   const [displayedDoctors, setDisplayedDoctors] = useState([]);
-  const [selectedDepartment, setSelectedDepartment] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const doctorsPerPage = 5;
+
+  const location = useLocation();
+  const deptId = location.state?.deptId;
+  const [departmentName, setDepartmentName] = useState("");
+
   const isAuthenticated = localStorage.getItem("isAuthenticated");
   const navigate = useNavigate();
 
-  const getdata = async () => {
+  const getData = async () => {
     try {
-      setIsLoading(true);
-      const res = await axios.get(`/doctor/getdata`);
-      console.log("+++ API response", res);
-
+      const res = await axios.get(`/department/getdata/${deptId}`);
       if (res.status === 200) {
-        setdoctorData(res.data.data);
+        setDoctorsData(res.data.doctors);
+        setDepartmentName(res.data.data.name);
         setIsLoading(false);
       }
-      console.log("++++ All doctor data :", doctorData);
     } catch (error) {
-      console.log("+++ Error while fetching data: ", error);
+      console.log("Error fetching data: ", error);
+      setIsLoading(false);
     }
   };
 
   useEffect(() => {
     if (!showModal) {
-      getdata();
+      getData();
     }
   }, [showModal]);
 
-  //pagination
+  // pagination
   useEffect(() => {
     const indexOfLastDoctor = currentPage * doctorsPerPage;
     const indexOfFirstDoctor = indexOfLastDoctor - doctorsPerPage;
-    const filteredDoctors = doctorData.filter((doctor) =>
-      doctor.department.toLowerCase().includes(selectedDepartment.toLowerCase())
-    );
     setDisplayedDoctors(
-      filteredDoctors.slice(indexOfFirstDoctor, indexOfLastDoctor)
+      doctorsData.slice(indexOfFirstDoctor, indexOfLastDoctor)
     );
-  }, [currentPage, doctorData, selectedDepartment]);
+  }, [currentPage, doctorsData]);
 
-  const totalPages = Math.ceil(
-    doctorData.filter((doctor) =>
-      doctor.department.toLowerCase().includes(selectedDepartment.toLowerCase())
-    ).length / doctorsPerPage
-  );
+  const totalPages = Math.ceil(doctorsData.length / doctorsPerPage);
 
   // react sweet alert box
   const MySwal = withReactContent(Swal);
@@ -94,11 +74,10 @@ const ViewDoctors = ({ notify, errorToast }) => {
       if (result.isConfirmed) {
         try {
           const res = await axios.delete(`/doctor/delete/${id}`);
-          console.log("+++ API response after delete doctor: ", res);
           if (res.status === 200) {
             notify(res.data.message);
           }
-          getdata();
+          getData();
         } catch (error) {
           console.log("+++ Error while deleting data: ", error);
         }
@@ -111,20 +90,6 @@ const ViewDoctors = ({ notify, errorToast }) => {
     navigate("/editdoctor", { state: { doctorid: id } });
   };
 
-  const handleReset = () => {
-    formik.resetForm();
-  };
-
-  const departments = [
-    "Cardiology",
-    "Neurology",
-    "Pediatrics",
-    "Surgery",
-    "Dermatology",
-    "Gynecology",
-    "Gastroenterology",
-    "Orthopedics",
-  ];
   // modal handling
   const handleOpen = () => {
     setShowModal(true);
@@ -134,50 +99,55 @@ const ViewDoctors = ({ notify, errorToast }) => {
     setShowModal(false);
   };
 
-  //addDoctor form handling
-  const initialValues = {
-    name: "",
-    email: "",
-    phone: "",
-    department: "",
-    gender: "",
-    qualification: "",
-    experience: "",
-    hospitalAffiliation: "",
-    licenseNumber: "",
-    address: "",
+  const handleReset = () => {
+    formik.resetForm({
+      values: {
+        ...formik.initialValues,
+        department: departmentName,
+      },
+    });
   };
 
+  // addDoctor form handling
   const formik = useFormik({
-    initialValues: initialValues,
+    initialValues: {
+      name: "",
+      email: "",
+      phone: "",
+      department: departmentName,
+      gender: "",
+      qualification: "",
+      experience: "",
+      hospitalAffiliation: "",
+      licenseNumber: "",
+      address: "",
+    },
     validationSchema: doctorSchema,
-    onSubmit: (values) => {
-      handleAddDoctor(values);
-      setShowModal(false);
-      console.log(values);
-      formik.resetForm();
+    onSubmit: async (values) => {
+      try {
+        const res = await axios.post("/doctor/create", values, {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+
+        if (res.status === 200) {
+          notify(res.data.message);
+          setShowModal(false);
+          getData();
+        }
+      } catch (error) {
+        console.error("Error adding user:", error);
+        errorToast("Failed to add user");
+      }
     },
   });
-
-  const handleAddDoctor = async (userdata) => {
-    try {
-      console.log("Form Values:", userdata);
-
-      const res = await axios.post("/doctor/create", userdata, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      console.log("+++API response for add doctor...", res);
-
-      if (res.status === 200) {
-        notify(res.data.message);
-      }
-    } catch (error) {
-      console.error("Error adding user:", error);
-      errorToast("Failed to add user");
+  // department field will hold a constant value that can never be changed
+  useEffect(() => {
+    if (departmentName) {
+      formik.setFieldValue("department", departmentName);
     }
-  };
+  }, [departmentName]);
 
   return (
     <>
@@ -200,7 +170,7 @@ const ViewDoctors = ({ notify, errorToast }) => {
             </div>
           ) : (
             <>
-              <div className="flex h-screen bg-gray-200">
+              <div className="flex bg-gray-200">
                 <Sidebar />
                 <div className="flex-1 flex flex-col">
                   <Navbar />
@@ -219,24 +189,7 @@ const ViewDoctors = ({ notify, errorToast }) => {
                           <i className="fa fa-plus"></i>
                         </button>
                       </div>
-                      <div className="col">
-                        <div className="float-right relative z-0">
-                          <select
-                            className="form-select"
-                            value={selectedDepartment}
-                            onChange={(e) =>
-                              setSelectedDepartment(e.target.value)
-                            }
-                          >
-                            <option value="">All Departments</option>
-                            {departments.map((department) => (
-                              <option key={department} value={department}>
-                                {department}
-                              </option>
-                            ))}
-                          </select>
-                        </div>
-                      </div>
+                      <div className="col"></div>
                     </div>
                     {showModal && (
                       <>
@@ -255,11 +208,13 @@ const ViewDoctors = ({ notify, errorToast }) => {
                                 <form
                                   onSubmit={formik.handleSubmit}
                                   className="shadow p-3 mt-5 mb-5 bg-white rounded"
+                                  style={{ position: "relative" }}
                                 >
                                   <div
                                     style={{
                                       maxHeight: "550px",
-                                      overflow: "auto",
+                                      overflowY: "auto",
+                                      paddingBottom: "60px",
                                     }}
                                   >
                                     <div className="card-title text-center font-bold">
@@ -343,64 +298,32 @@ const ViewDoctors = ({ notify, errorToast }) => {
                                     <div className="mb-3">
                                       <label htmlFor="department">
                                         Department
-                                        <span style={{ color: "red" }}>*</span>
                                       </label>
                                       <input
                                         name="department"
-                                        className={`form-control ${
-                                          formik.errors.department &&
-                                          formik.touched.department &&
-                                          "is-invalid"
-                                        }`}
+                                        className="form-control"
                                         type="text"
-                                        placeholder="department"
                                         value={formik.values.department}
-                                        onChange={formik.handleChange}
-                                        onBlur={formik.handleBlur}
+                                        readOnly
                                       />
-                                      {formik.errors.department &&
-                                      formik.touched.department ? (
-                                        <p className="invalid-feedback">
-                                          {formik.errors.department}
-                                        </p>
-                                      ) : null}
                                     </div>
-                                    {/* <div className="mb-3">
-                                      <label htmlFor="department">
-                                        Department
-                                        <span style={{ color: "red" }}>*</span>
-                                      </label>
-                                      <select
-                                        name="department"
-                                        onChange={formik.handleChange}
-                                        onBlur={formik.handleBlur}
-                                        className="form-select"
-                                      >
-                                        {arrayvalue.map((option, index) => (
-                                          <option
-                                            key={index}
-                                            value={option.name}
-                                          >
-                                            {option.name}
-                                          </option>
-                                        ))}
-                                      </select>
-                                    </div> */}
                                     <div className="mb-3">
                                       <label htmlFor="gender">Gender</label>
-                                      <input
+                                      <select
                                         name="gender"
                                         className={`form-control ${
                                           formik.errors.gender &&
                                           formik.touched.gender &&
                                           "is-invalid"
                                         }`}
-                                        type="text"
-                                        placeholder="Gender"
                                         value={formik.values.gender}
                                         onChange={formik.handleChange}
                                         onBlur={formik.handleBlur}
-                                      />
+                                      >
+                                        <option value="">Select gender</option>
+                                        <option value="Male">Male</option>
+                                        <option value="Female">Female</option>
+                                      </select>
                                       {formik.errors.gender &&
                                       formik.touched.gender ? (
                                         <p className="invalid-feedback">
@@ -470,7 +393,7 @@ const ViewDoctors = ({ notify, errorToast }) => {
                                           "is-invalid"
                                         }`}
                                         type="text"
-                                        placeholder="Hospital affiliation"
+                                        placeholder="Hospital Affiliation"
                                         value={
                                           formik.values.hospitalAffiliation
                                         }
@@ -497,7 +420,7 @@ const ViewDoctors = ({ notify, errorToast }) => {
                                           "is-invalid"
                                         }`}
                                         type="text"
-                                        placeholder="License number"
+                                        placeholder="License Number"
                                         value={formik.values.licenseNumber}
                                         onChange={formik.handleChange}
                                         onBlur={formik.handleBlur}
@@ -535,18 +458,16 @@ const ViewDoctors = ({ notify, errorToast }) => {
                                       ) : null}
                                     </div>
                                   </div>
-                                  <div className="mb-2">
+                                  <div>
                                     <button
                                       type="submit"
-                                      className="btn btn-primary w-100"
+                                      className="btn btn-primary btn-block mb-2"
                                     >
                                       Submit
                                     </button>
-                                  </div>
-                                  <div className="mb-2">
                                     <button
-                                      type="submit"
-                                      className="btn btn-secondary w-100"
+                                      type="button"
+                                      className="btn btn-secondary btn-block"
                                       onClick={handleReset}
                                     >
                                       Reset
@@ -559,105 +480,78 @@ const ViewDoctors = ({ notify, errorToast }) => {
                         </div>
                       </>
                     )}
-                    <div
-                      className="table-responsive"
-                      style={{
-                        maxHeight: "500px",
-                        overflow: "auto",
-                      }}
-                    >
-                      <table className="table table-striped table-bordered">
-                        <thead>
+                    <div className="table-responsive">
+                      <table className="table">
+                        <thead className="thead-dark">
                           <tr>
                             <th scope="col">#</th>
                             <th scope="col">Name</th>
                             <th scope="col">Email</th>
                             <th scope="col">Phone</th>
-                            <th scope="col">Gender</th>
                             <th scope="col">Department</th>
-
+                            <th scope="col">Gender</th>
                             <th scope="col">Qualification</th>
                             <th scope="col">Experience</th>
                             <th scope="col">Hospital Affiliation</th>
                             <th scope="col">License Number</th>
                             <th scope="col">Address</th>
-                            <th scope="col">Created on</th>
-                            <th scope="col">Action</th>
+                            <th scope="col">Actions</th>
                           </tr>
                         </thead>
                         <tbody>
-                          {displayedDoctors.length > 0 ? (
-                            displayedDoctors.map((doctor, index) => (
-                              <tr key={doctor._id}>
-                                <th scope="row">
-                                  {index +
-                                    1 +
-                                    (currentPage - 1) * doctorsPerPage}
-                                </th>
-                                <td>{doctor.name}</td>
-                                <td>{doctor.email}</td>
-                                <td>{doctor.phone}</td>
-                                <td>{doctor.gender}</td>
-                                <td>{doctor.department}</td>
-
-                                <td>{doctor.qualification}</td>
-                                <td>{doctor.experience}</td>
-                                <td>{doctor.hospitalAffiliation}</td>
-                                <td>{doctor.licenseNumber}</td>
-                                <td>{doctor.address}</td>
-                                <td>
-                                  {dateFormat(doctor.createdAt, "dd/mm/yyyy")}
-                                </td>
-                                <td>
-                                  <button
-                                    className="btn btn-sm btn-warning m-1"
-                                    onClick={() => editDoctor(doctor._id)}
-                                  >
-                                    <i className="bi bi-pencil-square"></i>
-                                  </button>
-
-                                  <button
-                                    className="btn btn-sm btn-danger m-1"
-                                    onClick={() => deleteDoctor(doctor._id)}
-                                  >
-                                    <i className="bi bi-trash"></i>
-                                  </button>
-                                </td>
-                              </tr>
-                            ))
-                          ) : (
-                            <tr>
-                              <td
-                                colSpan="12"
-                                className="text-danger text-center"
-                              >
-                                No data found
+                          {displayedDoctors.map((doctor, index) => (
+                            <tr key={doctor._id}>
+                              <th scope="row">{index + 1}</th>
+                              <td>{doctor.name}</td>
+                              <td>{doctor.email}</td>
+                              <td>{doctor.phone}</td>
+                              <td>{departmentName}</td>
+                              <td>{doctor.gender}</td>
+                              <td>{doctor.qualification}</td>
+                              <td>{doctor.experience}</td>
+                              <td>{doctor.hospitalAffiliation}</td>
+                              <td>{doctor.licenseNumber}</td>
+                              <td>{doctor.address}</td>
+                              <td>
+                                <button
+                                  className="btn btn-warning btn-sm m-1"
+                                  onClick={() => editDoctor(doctor._id)}
+                                >
+                                  <i className="fa fa-edit"></i>
+                                </button>
+                                <button
+                                  className="btn btn-danger btn-sm m-1"
+                                  onClick={() => deleteDoctor(doctor._id)}
+                                >
+                                  <i className="fa fa-trash"></i>
+                                </button>
                               </td>
                             </tr>
-                          )}
+                          ))}
                         </tbody>
                       </table>
+                      <div className="d-flex justify-content-center">
+                        <ResponsivePagination
+                          total={totalPages}
+                          current={currentPage}
+                          previousLabel="Previous"
+                          nextLabel="Next"
+                          onPageChange={setCurrentPage}
+                        />
+                      </div>
                     </div>
-
-                    <div className="p-2">
-                      <ResponsivePagination
-                        previousLabel="Previous"
-                        nextLabel="Next"
-                        current={currentPage}
-                        total={totalPages}
-                        onPageChange={setCurrentPage}
-                      />
+                    <div className="container-fluid">
+                      <div className="row d-flex justify-content-between">
+                        <div className="col-auto">
+                          <button onClick={() => navigate("/viewdepartments")}>
+                            <i className="fa fa-lg fa-solid fa-arrow-left">
+                              {" "}
+                              Back
+                            </i>
+                          </button>
+                        </div>
+                      </div>
                     </div>
-
-                    {/* <div className="container-fluid">
-                  <div className="row d-flex justify-content-between">
-                    <div className="col-auto">
-                      <button onClick={() => navigate("/dashboard")}>
-                        <i className="fa fa-lg fa-solid fa-arrow-left"> Home</i>
-                      </button>
-                    </div>
-                  </div>
-                </div> */}
                   </div>
                 </div>
               </div>
@@ -665,10 +559,10 @@ const ViewDoctors = ({ notify, errorToast }) => {
           )}
         </div>
       ) : (
-        navigate("/")
+        navigate("/login")
       )}
     </>
   );
 };
 
-export default ViewDoctors;
+export default DoctorsByDepartment;

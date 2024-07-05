@@ -11,6 +11,8 @@ import EditDoctor from "./Pages/EditDoctor";
 import ViewPatients from "./Pages/ViewPatients";
 import EditPatient from "./Pages/EditPatient";
 import ViewDepartments from "./Pages/ViewDepartments";
+import DoctorsByDepartment from "./Pages/DoctorsByDepartment";
+import PatientsByDepartment from "./Pages/PatientsByDepartment";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -70,12 +72,24 @@ const App = () => {
             element={<ViewDoctors notify={notify} errorToast={errorToast} />}
           ></Route>
           <Route
+            path="/doctorsbydepartment"
+            element={
+              <DoctorsByDepartment notify={notify} errorToast={errorToast} />
+            }
+          ></Route>
+          <Route
             path="/editdoctor"
             element={<EditDoctor notify={notify} errorToast={errorToast} />}
           ></Route>
           <Route
             path="/viewpatients"
             element={<ViewPatients notify={notify} errorToast={errorToast} />}
+          ></Route>
+          <Route
+            path="/patientsbydepartment"
+            element={
+              <PatientsByDepartment notify={notify} errorToast={errorToast} />
+            }
           ></Route>
           <Route
             path="/editpatient"

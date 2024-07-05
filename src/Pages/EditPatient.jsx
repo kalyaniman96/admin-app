@@ -21,7 +21,7 @@ const EditPatient = ({ notify }) => {
   const isAuthenticated = localStorage.getItem("isAuthenticated");
   const navigate = useNavigate();
   const location = useLocation();
-  const id = location.state?.doctorid;
+  const id = location.state?.patientid;
   console.log(id);
 
   const getPatient = async (id) => {
@@ -269,12 +269,20 @@ const EditPatient = ({ notify }) => {
                       <p className="text-red-500">{errors.emergencyContactRelation}</p>
                     )} */}
                   </div>
-                  <input
-                    className="btn btn-primary mt-2"
-                    value="Submit"
-                    type="submit"
-                    onClick={() => validateFormAndUpdate()}
-                  />
+                  <div className="flex justify-start items-center space-x-2 mt-4">
+                    <button
+                      className="btn btn-secondary"
+                      onClick={() => navigate(-1)}
+                    >
+                      <i className="fa fa-sm fa-arrow-left"> Back</i>
+                    </button>
+                    <input
+                      className="btn btn-primary"
+                      value="Submit"
+                      type="submit"
+                      onClick={() => validateFormAndUpdate()}
+                    />
+                  </div>
                 </div>
               </div>
             </div>

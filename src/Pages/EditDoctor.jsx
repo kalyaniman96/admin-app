@@ -250,12 +250,20 @@ const EditDoctor = ({ notify }) => {
                       <p className="text-red-500">{errors.address}</p>
                     )}
                   </div>
-                  <input
-                    className="btn btn-primary mt-2"
-                    value="Submit"
-                    type="submit"
-                    onClick={() => validateFormAndUpdate()}
-                  />
+                  <div className="flex justify-start items-center space-x-2 mt-4">
+                    <button
+                      className="btn btn-secondary"
+                      onClick={() => navigate(-1)}
+                    >
+                      <i className="fa fa-sm fa-solid fa-arrow-left"> Back</i>
+                    </button>
+                    <input
+                      className="btn btn-primary"
+                      value="Submit"
+                      type="submit"
+                      onClick={() => validateFormAndUpdate()}
+                    />
+                  </div>
                 </div>
               </div>
             </div>

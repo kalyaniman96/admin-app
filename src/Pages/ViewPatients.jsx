@@ -90,7 +90,7 @@ const ViewPatients = ({ notify, errorToast }) => {
   };
 
   const editPatient = (id) => {
-    navigate("/editpatient", { state: { doctorid: id } });
+    navigate("/editpatient", { state: { patientid: id } });
   };
 
   const handleReset = () => {
@@ -186,11 +186,11 @@ const ViewPatients = ({ notify, errorToast }) => {
     <>
       {isAuthenticated ? (
         <>
-          <div className="flex h-screen bg-gray-200">
+          <div className="d-flex h-screen flex-grow-1 bg-gray-200">
             <Sidebar />
-            <div className="flex-1 flex flex-col">
+            <div className="d-flex flex-column flex-grow-1">
               <Navbar />
-              <div className="container-fluid main-content">
+              <div className="container-fluid main-content flex-grow-1 d-flex flex-column">
                 <div className="d-flex justify-content-between align-items-center mt-2 mb-3">
                   <div className="col"></div>
                   <div className="col-auto">
@@ -249,7 +249,9 @@ const ViewPatients = ({ notify, errorToast }) => {
                                   <h1>Add Patient</h1>
                                 </div>
                                 <div className="mb-3">
-                                  <label htmlFor="name">Name*</label>
+                                  <label htmlFor="name">
+                                    Name<span style={{ color: "red" }}>*</span>
+                                  </label>
                                   <input
                                     name="name"
                                     className={`form-control ${
@@ -270,7 +272,9 @@ const ViewPatients = ({ notify, errorToast }) => {
                                   ) : null}
                                 </div>
                                 <div className="mb-3">
-                                  <label htmlFor="email">Email*</label>
+                                  <label htmlFor="email">
+                                    Email<span style={{ color: "red" }}>*</span>
+                                  </label>
                                   <input
                                     name="email"
                                     className={`form-control ${
@@ -291,7 +295,9 @@ const ViewPatients = ({ notify, errorToast }) => {
                                   ) : null}
                                 </div>
                                 <div className="mb-3">
-                                  <label htmlFor="phone">Phone*</label>
+                                  <label htmlFor="phone">
+                                    Phone<span style={{ color: "red" }}>*</span>
+                                  </label>
                                   <input
                                     name="phone"
                                     className={`form-control ${
@@ -334,7 +340,8 @@ const ViewPatients = ({ notify, errorToast }) => {
                                 </div>
                                 <div className="mb-3">
                                   <label htmlFor="department">
-                                    Department*
+                                    Department
+                                    <span style={{ color: "red" }}>*</span>
                                   </label>
                                   <input
                                     name="department"
@@ -357,7 +364,8 @@ const ViewPatients = ({ notify, errorToast }) => {
                                 </div>
                                 <div className="mb-3">
                                   <label htmlFor="medicalHistory">
-                                    Medical history*
+                                    Medical history
+                                    <span style={{ color: "red" }}>*</span>
                                   </label>
                                   <input
                                     name="medicalHistory"
@@ -381,7 +389,8 @@ const ViewPatients = ({ notify, errorToast }) => {
                                 </div>
                                 <div className="mb-3">
                                   <label htmlFor="currentMedications">
-                                    Current Medications*
+                                    Current Medications
+                                    <span style={{ color: "red" }}>*</span>
                                   </label>
                                   <input
                                     name="currentMedications"
@@ -406,6 +415,7 @@ const ViewPatients = ({ notify, errorToast }) => {
                                 <div className="mb-3">
                                   <label htmlFor="emergencyContactName">
                                     Emergency Contact Name
+                                    <span style={{ color: "red" }}>*</span>
                                   </label>
                                   <input
                                     name="emergencyContactName"
@@ -429,7 +439,8 @@ const ViewPatients = ({ notify, errorToast }) => {
                                 </div>
                                 <div className="mb-3">
                                   <label htmlFor="emergencyContactPhone">
-                                    Emergency contact number*
+                                    Emergency contact number
+                                    <span style={{ color: "red" }}>*</span>
                                   </label>
                                   <input
                                     name="emergencyContactNumber"
@@ -453,7 +464,7 @@ const ViewPatients = ({ notify, errorToast }) => {
                                 </div>
                                 <div className="mb-3">
                                   <label htmlFor="emergencyContactRelation">
-                                    Emergency contact relation*
+                                    Emergency contact relation
                                   </label>
                                   <input
                                     name="emergencyContactRelation"
