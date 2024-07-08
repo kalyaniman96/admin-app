@@ -373,6 +373,8 @@ const ViewDepartments = ({ notify, errorToast }) => {
 
                     <div className="p-2">
                       <ResponsivePagination
+                        previousLabel="Prev"
+                        nextLabel="Next"
                         current={currentPage}
                         total={totalPages}
                         onPageChange={setCurrentPage}

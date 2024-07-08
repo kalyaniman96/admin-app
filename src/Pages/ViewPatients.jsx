@@ -634,7 +634,7 @@ const ViewPatients = ({ notify, errorToast }) => {
 
                   <div className="p-2">
                     <ResponsivePagination
-                      previousLabel="Previous"
+                      previousLabel="Prev"
                       nextLabel="Next"
                       current={currentPage}
                       total={totalPages}

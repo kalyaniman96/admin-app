@@ -305,7 +305,7 @@ const ViewDoctors = ({ notify, errorToast }) => {
                         current={currentPage}
                         onPageChange={setCurrentPage}
                         showPageSizeOptions={true}
-                        previousLabel="Previous"
+                        previousLabel="Prev"
                         nextLabel="Next"
                       />
                     </div>
