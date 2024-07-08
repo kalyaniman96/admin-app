@@ -337,7 +337,9 @@ const ViewDoctors = ({ notify, errorToast }) => {
                   <form onSubmit={formik.handleSubmit}>
                     <div style={{ overflowY: "auto", maxHeight: "550px" }}>
                       <div className="form-group">
-                        <label htmlFor="name">Name</label>
+                        <label htmlFor="name">
+                          Name<span style={{ color: "red" }}>*</span>
+                        </label>
                         <input
                           type="text"
                           className="form-control"
@@ -354,7 +356,9 @@ const ViewDoctors = ({ notify, errorToast }) => {
                         ) : null}
                       </div>
                       <div className="form-group">
-                        <label htmlFor="email">Email</label>
+                        <label htmlFor="email">
+                          Email<span style={{ color: "red" }}>*</span>
+                        </label>
                         <input
                           type="email"
                           className="form-control"
@@ -371,7 +375,9 @@ const ViewDoctors = ({ notify, errorToast }) => {
                         ) : null}
                       </div>
                       <div className="form-group">
-                        <label htmlFor="phone">Phone</label>
+                        <label htmlFor="phone">
+                          Phone<span style={{ color: "red" }}>*</span>
+                        </label>
                         <input
                           type="text"
                           className="form-control"
@@ -388,7 +394,9 @@ const ViewDoctors = ({ notify, errorToast }) => {
                         ) : null}
                       </div>
                       <div className="form-group">
-                        <label htmlFor="department">Department</label>
+                        <label htmlFor="department">
+                          Department<span style={{ color: "red" }}>*</span>
+                        </label>
                         <select
                           className="form-control"
                           id="department"
@@ -433,7 +441,9 @@ const ViewDoctors = ({ notify, errorToast }) => {
                         ) : null}
                       </div>
                       <div className="form-group">
-                        <label htmlFor="qualification">Qualification</label>
+                        <label htmlFor="qualification">
+                          Qualification<span style={{ color: "red" }}>*</span>
+                        </label>
                         <input
                           type="text"
                           className="form-control"
@@ -451,7 +461,9 @@ const ViewDoctors = ({ notify, errorToast }) => {
                         ) : null}
                       </div>
                       <div className="form-group">
-                        <label htmlFor="experience">Experience</label>
+                        <label htmlFor="experience">
+                          Experience<span style={{ color: "red" }}>*</span>
+                        </label>
                         <input
                           type="text"
                           className="form-control"
@@ -489,7 +501,9 @@ const ViewDoctors = ({ notify, errorToast }) => {
                         ) : null}
                       </div>
                       <div className="form-group">
-                        <label htmlFor="licenseNumber">License Number</label>
+                        <label htmlFor="licenseNumber">
+                          License Number<span style={{ color: "red" }}>*</span>
+                        </label>
                         <input
                           type="text"
                           className="form-control"
@@ -507,7 +521,9 @@ const ViewDoctors = ({ notify, errorToast }) => {
                         ) : null}
                       </div>
                       <div className="form-group">
-                        <label htmlFor="address">Address</label>
+                        <label htmlFor="address">
+                          Address<span style={{ color: "red" }}>*</span>
+                        </label>
                         <input
                           type="text"
                           className="form-control"
