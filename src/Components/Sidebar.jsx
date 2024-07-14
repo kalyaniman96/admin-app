@@ -27,7 +27,12 @@ const Sidebar = () => {
         </div>
         <nav className="flex-1">
           <Link to="/dashboard" className="block px-4 py-2 hover:bg-gray-700">
-            {!isCollapsed && "Home"}
+            {!isCollapsed && (
+              <div>
+                <i class="bi bi-house-door"></i>
+                <span>&nbsp;Home</span>
+              </div>
+            )}
           </Link>
           <button
             onClick={() => setDropdownOpen(!dropdownOpen)}
@@ -81,7 +86,12 @@ const Sidebar = () => {
             </div>
           )}
           <Link to="/settings" className="block px-4 py-2 hover:bg-gray-700">
-            {!isCollapsed && "Settings"}
+            {!isCollapsed && (
+              <div>
+                <i class="bi bi-gear"></i>
+                <span>&nbsp;Settings</span>
+              </div>
+            )}
           </Link>
         </nav>
       </div>
