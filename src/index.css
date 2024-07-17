@@ -128,3 +128,112 @@
 .button-link:hover {
   border-bottom: 1px solid blue;
 }
+
+/* Dark mode styles */
+
+.dark-mode .body {
+  background-color: #090909ab;
+  color: #e0e0e0;
+}
+
+.dark-mode .card {
+  background-color: #1e1e1e;
+  color: #e0e0e0;
+}
+
+.dark-mode .navbar {
+  background-color: #1e1e1e79;
+  color: #e0e0e0;
+}
+
+.dark-mode .sidebar {
+  background-color: #1e1e1e;
+  color: #e0e0e0;
+}
+
+.dark-mode .chartjs-render-monitor {
+  background-color: #1e1e1e;
+}
+
+.dark-mode .card-counter.primary {
+  background-color: #282828;
+}
+
+.dark-mode .card-counter.info {
+  background-color: #333333;
+}
+
+.dark-mode .card-counter.success {
+  background-color: #3b3b3b;
+}
+
+.dark-mode .card-counter.danger {
+  background-color: #444444;
+}
+
+/* Dark mode styles */
+.modal-dark .modal-content {
+  background-color: #343a40; /* Dark background color */
+  color: #fff; /* Light text color on dark background */
+  border-color: rgba(255, 255, 255, 0.2); /* Darker border color */
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.5); /* Darker box shadow */
+}
+
+.modal-dark .modal-title {
+  color: #fff; /* Light title text color */
+}
+
+.modal-dark .modal-header {
+  border-bottom-color: rgba(255, 255, 255, 0.2); /* Darker border color */
+}
+
+.modal-dark .modal-body {
+  color: #fff; /* Light text color */
+}
+
+.modal-dark .modal-footer {
+  border-top-color: rgba(255, 255, 255, 0.2); /* Darker border color */
+}
+
+.modal-dark .close {
+  color: #fff; /* Light close button color */
+}
+
+.modal-dark .btn-primary {
+  background-color: #007bff; /* Primary button color in dark mode */
+  color: #fff; /* Light text color for primary button */
+}
+
+.modal-dark .btn-secondary {
+  background-color: #6c757d; /* Secondary button color in dark mode */
+  color: #fff; /* Light text color for secondary button */
+}
+
+.modal-dark .form-control {
+  background-color: #495057; /* Input field background color in dark mode */
+  color: #fff; /* Light text color for input fields */
+  border-color: #343a40; /* Darker border color for input fields */
+}
+
+.modal-dark .text-danger {
+  color: #dc3545; /* Red text color for error messages */
+}
+
+/* Dark Mode Pagination Styles */
+.pagination-dark {
+  /* Dark mode specific styles */
+  background-color: #333;
+  color: #fff;
+}
+
+.pagination-dark .page-link {
+  /* Styles for page links in dark mode */
+  color: #fff;
+  background-color: #555;
+}
+
+.pagination-dark .page-item.active .page-link {
+  /* Styles for active page link in dark mode */
+  background-color: #007bff;
+  border-color: #007bff;
+}

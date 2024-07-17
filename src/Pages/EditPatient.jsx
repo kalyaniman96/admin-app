@@ -4,7 +4,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import Sidebar from "../Components/Sidebar";
 import Navbar from "../Components/Navbar";
 
-const EditPatient = ({ notify }) => {
+const EditPatient = ({ notify, errorToast, darkMode, setDarkMode }) => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
@@ -111,18 +111,28 @@ const EditPatient = ({ notify }) => {
   return (
     <>
       {isAuthenticated ? (
-        <div className="flex bg-gray-200">
-          <Sidebar />
+        <div
+          className={`flex flex-grow-1 ${
+            darkMode ? "bg-dark text-white" : "bg-gray-200"
+          }`}
+        >
+          <Sidebar darkMode={darkMode} setDarkMode={setDarkMode} />
           <div className="flex-1 flex flex-col">
-            <Navbar />
-            <div className="card p-4 m-10 ">
+            <Navbar darkMode={darkMode} />
+            <div
+              className={`card p-4 m-10 ${
+                darkMode ? "modal-dark bg-dark text-white" : ""
+              } `}
+            >
               <div className="form-box">
                 <h1 className="card-title text-center font-bold">
                   Edit patient data
                 </h1>
                 <div>
                   <div className="form-group">
-                    <label htmlFor="name">Name*</label>
+                    <label htmlFor="name">
+                      Name<span style={{ color: "red" }}>*</span>
+                    </label>
                     <input
                       className="form-control"
                       id="name"
@@ -135,7 +145,9 @@ const EditPatient = ({ notify }) => {
                     )}
                   </div>
                   <div className="form-group">
-                    <label htmlFor="email">Email*</label>
+                    <label htmlFor="email">
+                      Email<span style={{ color: "red" }}>*</span>
+                    </label>
                     <input
                       className="form-control"
                       id="email"
@@ -148,7 +160,9 @@ const EditPatient = ({ notify }) => {
                     )}
                   </div>
                   <div className="form-group">
-                    <label htmlFor="phone">Phone*</label>
+                    <label htmlFor="phone">
+                      Phone<span style={{ color: "red" }}>*</span>
+                    </label>
                     <input
                       className="form-control"
                       id="phone"
@@ -161,7 +175,9 @@ const EditPatient = ({ notify }) => {
                     )}
                   </div>
                   <div className="form-group">
-                    <label htmlFor="department">Department*</label>
+                    <label htmlFor="department">
+                      Department<span style={{ color: "red" }}>*</span>
+                    </label>
                     <input
                       className="form-control"
                       id="department"
@@ -187,7 +203,9 @@ const EditPatient = ({ notify }) => {
                     )} */}
                   </div>
                   <div className="form-group">
-                    <label htmlFor="medicalHistory">Medical History*</label>
+                    <label htmlFor="medicalHistory">
+                      Medical History<span style={{ color: "red" }}>*</span>
+                    </label>
                     <input
                       className="form-control"
                       id="medicalHistory"
@@ -201,7 +219,7 @@ const EditPatient = ({ notify }) => {
                   </div>
                   <div className="form-group">
                     <label htmlFor="currentMedications">
-                      Current Medications*
+                      Current Medications<span style={{ color: "red" }}>*</span>
                     </label>
                     <input
                       className="form-control"
@@ -218,7 +236,8 @@ const EditPatient = ({ notify }) => {
                   </div>
                   <div className="form-group">
                     <label htmlFor="emergencyContactName">
-                      Emergency Contact Name*
+                      Emergency Contact Name
+                      <span style={{ color: "red" }}>*</span>
                     </label>
                     <input
                       className="form-control"
@@ -235,7 +254,8 @@ const EditPatient = ({ notify }) => {
                   </div>
                   <div className="form-group">
                     <label htmlFor="emergencyContactNumber">
-                      Emergency Contact Number*
+                      Emergency Contact Number
+                      <span style={{ color: "red" }}>*</span>
                     </label>
                     <input
                       className="form-control"

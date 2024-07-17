@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import Sidebar from "../Components/Sidebar";
+import Navbar from "../Components/Navbar";
+import Loader from "../Components/Loader";
 
-const Profile = () => {
+const Profile = ({ darkMode, setDarkMode }) => {
   const [userData, setUserData] = useState({});
   const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
@@ -45,22 +48,49 @@ const Profile = () => {
       {isAuthenticated ? (
         <div>
           {isLoading ? (
-            <div>
-              <p>Loading...</p>
+            <div
+              className="loading-container"
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                width: "100vw",
+                height: "100vh",
+                position: "absolute",
+                top: 0,
+                left: 0,
+              }}
+            >
+              <Loader />
             </div>
           ) : (
             <>
-              <div style={styles.style}>
-                {/* <img src={userData} alt={user.name} /> */}
-                &nbsp;
-                <h2>{`Welcome ${userData.email}`}</h2>
-              </div>
-              <div className="container-fluid">
-                <div className="row d-flex justify-content-between">
-                  <div className="col-auto">
-                    <button onClick={() => navigate("/dashboard")}>
-                      <i className="fa fa-lg fa-solid fa-arrow-left"> Home</i>
-                    </button>
+              <div
+                className={`flex h-screen flex-grow-1 ${
+                  darkMode ? "bg-dark text-white" : "bg-gray-200"
+                }`}
+              >
+                <Sidebar darkMode={darkMode} setDarkMode={setDarkMode} />
+                <div className="flex-1 flex flex-col">
+                  <Navbar darkMode={darkMode} />
+                  <div style={styles.style}>
+                    {/* <img src={userData} alt={user.name} /> */}
+                    &nbsp;
+                    <h1
+                      style={{ fontWeight: "bold" }}
+                    >{`Welcome ${userData.email}`}</h1>
+                  </div>
+                  <div className="container-fluid">
+                    <div className="row d-flex justify-content-between">
+                      <div className="col-auto">
+                        <button onClick={() => navigate("/dashboard")}>
+                          <i className="fa fa-lg fa-solid fa-arrow-left">
+                            {" "}
+                            Home
+                          </i>
+                        </button>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>

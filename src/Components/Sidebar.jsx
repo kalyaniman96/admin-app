@@ -1,12 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
-const Sidebar = () => {
+const Sidebar = ({ darkMode, setDarkMode }) => {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
   const toggleSidebar = () => {
     setIsCollapsed(!isCollapsed);
+  };
+
+  const toggleDarkMode = () => {
+    setDarkMode(!darkMode);
   };
 
   useEffect(() => {
@@ -85,14 +89,26 @@ const Sidebar = () => {
               </Link>
             </div>
           )}
-          <Link to="/settings" className="block px-4 py-2 hover:bg-gray-700">
+          <button
+            className="block px-4 py-2 hover:bg-gray-700"
+            onClick={toggleDarkMode}
+          >
             {!isCollapsed && (
               <div>
-                <i class="bi bi-gear"></i>
-                <span>&nbsp;Settings</span>
+                {darkMode ? (
+                  <div>
+                    <i class="bi bi-sun-fill"></i>
+                    <span>&nbsp;Light mode</span>
+                  </div>
+                ) : (
+                  <div>
+                    <i class="bi bi-moon-stars-fill"></i>
+                    <span>&nbsp;Dark mode</span>
+                  </div>
+                )}
               </div>
             )}
-          </Link>
+          </button>
         </nav>
       </div>
       <button

@@ -13,7 +13,7 @@ import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import Loader from "../Components/Loader";
 
-const ViewPatients = ({ notify, errorToast }) => {
+const ViewPatients = ({ notify, errorToast, darkMode, setDarkMode }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
@@ -61,6 +61,7 @@ const ViewPatients = ({ notify, errorToast }) => {
     }
   }, [showModal]);
 
+  //pagination...
   useEffect(() => {
     const indexOfLastPatient = currentPage * patientsPerPage;
     const indexOfFirstPatient = indexOfLastPatient - patientsPerPage;
@@ -213,11 +214,19 @@ const ViewPatients = ({ notify, errorToast }) => {
               <Loader />
             </div>
           ) : (
-            <div className="flex h-screen flex-grow-1 bg-gray-200">
-              <Sidebar />
+            <div
+              className={`flex h-screen flex-grow-1 ${
+                darkMode ? "bg-dark text-white" : "bg-gray-200"
+              }`}
+            >
+              <Sidebar darkMode={darkMode} setDarkMode={setDarkMode} />
               <div className="flex flex-column flex-grow-1">
-                <Navbar />
-                <div className="container-fluid main-content flex-grow-1 d-flex flex-column">
+                <Navbar darkMode={darkMode} />
+                <div
+                  className={`container-fluid main-content flex-grow-1 d-flex flex-column ${
+                    darkMode ? "bg-dark text-white" : ""
+                  }`}
+                >
                   <div className="d-flex justify-content-between align-items-center mt-2 mb-3">
                     <div className="col"></div>
                     <div className="col-auto">
@@ -235,7 +244,9 @@ const ViewPatients = ({ notify, errorToast }) => {
                     <div className="col">
                       <div className="float-right relative z-0">
                         <select
-                          className="form-select"
+                          className={`form-select ${
+                            darkMode ? "bg-gray-600 text-white" : ""
+                          }`}
                           value={selectedDepartment}
                           onChange={(e) =>
                             setSelectedDepartment(e.target.value)
@@ -254,7 +265,11 @@ const ViewPatients = ({ notify, errorToast }) => {
                   {showModal && (
                     <>
                       {/* Add patient modal */}
-                      <div className="modal-backdrop">
+                      <div
+                        className={`modal-backdrop ${
+                          darkMode ? "modal-dark" : ""
+                        }`}
+                      >
                         <div className="modal-container">
                           <div className="row justify-content-center">
                             <div className="col-md-4 mt-10">
@@ -266,7 +281,9 @@ const ViewPatients = ({ notify, errorToast }) => {
                               </button>
                               <form
                                 onSubmit={handleSubmit}
-                                className="shadow p-3 mt-5 mb-5 bg-white rounded"
+                                className={`shadow p-3 mt-5 mb-5 rounded ${
+                                  darkMode ? "bg-dark text-white" : "bg-white"
+                                }`}
                               >
                                 <div
                                   style={{
@@ -283,23 +300,24 @@ const ViewPatients = ({ notify, errorToast }) => {
                                       <span style={{ color: "red" }}>*</span>
                                     </label>
                                     <input
-                                      name="name"
-                                      className={`form-control ${
-                                        errors.name &&
-                                        touched.name &&
-                                        "is-invalid"
-                                      }`}
                                       type="text"
-                                      placeholder="Name"
-                                      value={formValues.name}
+                                      className={`form-control ${
+                                        errors.name && touched.name
+                                          ? "is-invalid"
+                                          : ""
+                                      }`}
+                                      id="name"
+                                      name="name"
                                       onChange={handleInputChange}
                                       onBlur={handleBlur}
+                                      value={formValues.name}
+                                      required
                                     />
-                                    {errors.name && touched.name ? (
-                                      <p className="invalid-feedback">
+                                    {errors.name && touched.name && (
+                                      <div className="invalid-feedback">
                                         {errors.name}
-                                      </p>
-                                    ) : null}
+                                      </div>
+                                    )}
                                   </div>
                                   <div className="mb-3">
                                     <label htmlFor="email">
@@ -307,23 +325,24 @@ const ViewPatients = ({ notify, errorToast }) => {
                                       <span style={{ color: "red" }}>*</span>
                                     </label>
                                     <input
-                                      name="email"
-                                      className={`form-control ${
-                                        errors.email &&
-                                        touched.email &&
-                                        "is-invalid"
-                                      }`}
                                       type="email"
-                                      placeholder="Email"
-                                      value={formValues.email}
+                                      className={`form-control ${
+                                        errors.email && touched.email
+                                          ? "is-invalid"
+                                          : ""
+                                      }`}
+                                      id="email"
+                                      name="email"
                                       onChange={handleInputChange}
                                       onBlur={handleBlur}
+                                      value={formValues.email}
+                                      required
                                     />
-                                    {errors.email && touched.email ? (
-                                      <p className="invalid-feedback">
+                                    {errors.email && touched.email && (
+                                      <div className="invalid-feedback">
                                         {errors.email}
-                                      </p>
-                                    ) : null}
+                                      </div>
+                                    )}
                                   </div>
                                   <div className="mb-3">
                                     <label htmlFor="phone">
@@ -331,44 +350,24 @@ const ViewPatients = ({ notify, errorToast }) => {
                                       <span style={{ color: "red" }}>*</span>
                                     </label>
                                     <input
-                                      name="phone"
-                                      className={`form-control ${
-                                        errors.phone &&
-                                        touched.phone &&
-                                        "is-invalid"
-                                      }`}
                                       type="text"
-                                      placeholder="Phone"
-                                      value={formValues.phone}
+                                      className={`form-control ${
+                                        errors.phone && touched.phone
+                                          ? "is-invalid"
+                                          : ""
+                                      }`}
+                                      id="phone"
+                                      name="phone"
                                       onChange={handleInputChange}
                                       onBlur={handleBlur}
+                                      value={formValues.phone}
+                                      required
                                     />
-                                    {errors.phone && touched.phone ? (
-                                      <p className="invalid-feedback">
+                                    {errors.phone && touched.phone && (
+                                      <div className="invalid-feedback">
                                         {errors.phone}
-                                      </p>
-                                    ) : null}
-                                  </div>
-                                  <div className="form-group">
-                                    <label htmlFor="gender">Gender</label>
-                                    <select
-                                      className="form-control"
-                                      id="gender"
-                                      name="gender"
-                                      onChange={handleChange}
-                                      onBlur={handleBlur}
-                                      value={formValues.gender}
-                                    >
-                                      <option value="">Select Gender</option>
-                                      <option value="male">Male</option>
-                                      <option value="female">Female</option>
-                                      <option value="other">Other</option>
-                                    </select>
-                                    {touched.gender && errors.gender ? (
-                                      <div className="text-danger">
-                                        {errors.gender}
                                       </div>
-                                    ) : null}
+                                    )}
                                   </div>
                                   <div className="mb-3">
                                     <label htmlFor="department">
@@ -376,15 +375,20 @@ const ViewPatients = ({ notify, errorToast }) => {
                                       <span style={{ color: "red" }}>*</span>
                                     </label>
                                     <select
-                                      className="form-control"
+                                      className={`form-control ${
+                                        errors.department && touched.department
+                                          ? "is-invalid"
+                                          : ""
+                                      }`}
                                       id="department"
                                       name="department"
-                                      onChange={handleChange}
+                                      onChange={handleInputChange}
                                       onBlur={handleBlur}
                                       value={formValues.department}
+                                      required
                                     >
                                       <option value="">
-                                        Select department
+                                        Select a department
                                       </option>
                                       {departmentData.map((department) => (
                                         <option
@@ -395,61 +399,90 @@ const ViewPatients = ({ notify, errorToast }) => {
                                         </option>
                                       ))}
                                     </select>
-                                    {errors.department && touched.department ? (
-                                      <p className="invalid-feedback">
-                                        {errors.department}
-                                      </p>
-                                    ) : null}
+                                    {errors.department &&
+                                      touched.department && (
+                                        <div className="invalid-feedback">
+                                          {errors.department}
+                                        </div>
+                                      )}
+                                  </div>
+                                  <div className="mb-3">
+                                    <label htmlFor="gender">Gender</label>
+                                    <select
+                                      className={`form-control ${
+                                        errors.gender && touched.gender
+                                          ? "is-invalid"
+                                          : ""
+                                      }`}
+                                      id="gender"
+                                      name="gender"
+                                      onChange={handleInputChange}
+                                      onBlur={handleBlur}
+                                      value={formValues.gender}
+                                      required
+                                    >
+                                      <option value="">Select gender</option>
+                                      <option value="male">Male</option>
+                                      <option value="female">Female</option>
+                                      <option value="other">Other</option>
+                                    </select>
+                                    {errors.gender && touched.gender && (
+                                      <div className="invalid-feedback">
+                                        {errors.gender}
+                                      </div>
+                                    )}
                                   </div>
                                   <div className="mb-3">
                                     <label htmlFor="medicalHistory">
-                                      Medical history
+                                      Medical History
                                       <span style={{ color: "red" }}>*</span>
                                     </label>
-                                    <input
-                                      name="medicalHistory"
+                                    <textarea
                                       className={`form-control ${
                                         errors.medicalHistory &&
-                                        touched.medicalHistory &&
-                                        "is-invalid"
+                                        touched.medicalHistory
+                                          ? "is-invalid"
+                                          : ""
                                       }`}
-                                      type="text"
-                                      placeholder="Medical history"
-                                      value={formValues.medicalHistory}
+                                      id="medicalHistory"
+                                      name="medicalHistory"
                                       onChange={handleInputChange}
                                       onBlur={handleBlur}
+                                      value={formValues.medicalHistory}
+                                      required
                                     />
                                     {errors.medicalHistory &&
-                                    touched.medicalHistory ? (
-                                      <p className="invalid-feedback">
-                                        {errors.medicalHistory}
-                                      </p>
-                                    ) : null}
+                                      touched.medicalHistory && (
+                                        <div className="invalid-feedback">
+                                          {errors.medicalHistory}
+                                        </div>
+                                      )}
                                   </div>
                                   <div className="mb-3">
                                     <label htmlFor="currentMedications">
                                       Current Medications
                                       <span style={{ color: "red" }}>*</span>
                                     </label>
-                                    <input
-                                      name="currentMedications"
+                                    <textarea
                                       className={`form-control ${
                                         errors.currentMedications &&
-                                        touched.currentMedications &&
-                                        "is-invalid"
+                                        touched.currentMedications
+                                          ? "is-invalid"
+                                          : ""
                                       }`}
-                                      type="text"
-                                      placeholder="Current Medications"
-                                      value={formValues.currentMedications}
+                                      id="currentMedications"
+                                      name="currentMedications"
                                       onChange={handleInputChange}
                                       onBlur={handleBlur}
+                                      value={formValues.currentMedications}
+                                      required
                                     />
                                     {errors.currentMedications &&
-                                    touched.currentMedications ? (
-                                      <p className="invalid-feedback">
-                                        {errors.currentMedications}
-                                      </p>
-                                    ) : null}
+                                      touched.currentMedications && (
+                                        <div className="invalid-feedback">
+                                          {errors.currentMedications}
+                                        </div>
+                                      )}
                                   </div>
                                   <div className="mb-3">
                                     <label htmlFor="emergencyContactName">
@@ -457,89 +490,93 @@ const ViewPatients = ({ notify, errorToast }) => {
                                       <span style={{ color: "red" }}>*</span>
                                     </label>
                                     <input
-                                      name="emergencyContactName"
+                                      type="text"
                                       className={`form-control ${
                                         errors.emergencyContactName &&
-                                        touched.emergencyContactName &&
-                                        "is-invalid"
+                                        touched.emergencyContactName
+                                          ? "is-invalid"
+                                          : ""
                                       }`}
-                                      type="text"
-                                      placeholder="Emergency Contact Name"
-                                      value={formValues.emergencyContactName}
+                                      id="emergencyContactName"
+                                      name="emergencyContactName"
                                       onChange={handleInputChange}
                                       onBlur={handleBlur}
+                                      value={formValues.emergencyContactName}
+                                      required
                                     />
                                     {errors.emergencyContactName &&
-                                    touched.emergencyContactName ? (
-                                      <p className="invalid-feedback">
-                                        {errors.emergencyContactName}
-                                      </p>
-                                    ) : null}
+                                      touched.emergencyContactName && (
+                                        <div className="invalid-feedback">
+                                          {errors.emergencyContactName}
+                                        </div>
+                                      )}
                                   </div>
                                   <div className="mb-3">
-                                    <label htmlFor="emergencyContactPhone">
-                                      Emergency contact number
+                                    <label htmlFor="emergencyContactNumber">
+                                      Emergency Contact Number
                                       <span style={{ color: "red" }}>*</span>
                                     </label>
                                     <input
-                                      name="emergencyContactNumber"
+                                      type="text"
                                       className={`form-control ${
                                         errors.emergencyContactNumber &&
-                                        touched.emergencyContactNumber &&
-                                        "is-invalid"
+                                        touched.emergencyContactNumber
+                                          ? "is-invalid"
+                                          : ""
                                       }`}
-                                      type="text"
-                                      placeholder="Emergency contact number"
-                                      value={formValues.emergencyContactNumber}
+                                      id="emergencyContactNumber"
+                                      name="emergencyContactNumber"
                                       onChange={handleInputChange}
                                       onBlur={handleBlur}
+                                      value={formValues.emergencyContactNumber}
+                                      required
                                     />
                                     {errors.emergencyContactNumber &&
-                                    touched.emergencyContactNumber ? (
-                                      <p className="invalid-feedback">
-                                        {errors.emergencyContactNumber}
-                                      </p>
-                                    ) : null}
+                                      touched.emergencyContactNumber && (
+                                        <div className="invalid-feedback">
+                                          {errors.emergencyContactNumber}
+                                        </div>
+                                      )}
                                   </div>
                                   <div className="mb-3">
                                     <label htmlFor="emergencyContactRelation">
-                                      Emergency contact relation
+                                      Emergency Contact Relation
                                     </label>
                                     <input
-                                      name="emergencyContactRelation"
+                                      type="text"
                                       className={`form-control ${
                                         errors.emergencyContactRelation &&
-                                        touched.emergencyContactRelation &&
-                                        "is-invalid"
+                                        touched.emergencyContactRelation
+                                          ? "is-invalid"
+                                          : ""
                                       }`}
-                                      type="text"
-                                      placeholder="Emergency contact relation"
+                                      id="emergencyContactRelation"
+                                      name="emergencyContactRelation"
+                                      onChange={handleInputChange}
+                                      onBlur={handleBlur}
                                       value={
                                         formValues.emergencyContactRelation
                                       }
-                                      onChange={handleInputChange}
-                                      onBlur={handleBlur}
+                                      required
                                     />
                                     {errors.emergencyContactRelation &&
-                                    touched.emergencyContactRelation ? (
-                                      <p className="invalid-feedback">
-                                        {errors.emergencyContactRelation}
-                                      </p>
-                                    ) : null}
+                                      touched.emergencyContactRelation && (
+                                        <div className="invalid-feedback">
+                                          {errors.emergencyContactRelation}
+                                        </div>
+                                      )}
                                   </div>
                                 </div>
-                                <div className="mb-2">
+                                <div className="text-center">
                                   <button
                                     type="submit"
-                                    className="btn btn-primary w-100"
+                                    className="btn btn-block btn-primary mt-4"
                                   >
-                                    Submit
+                                    Add Patient
                                   </button>
-                                </div>
-                                <div className="mb-2">
                                   <button
-                                    type="submit"
-                                    className="btn btn-secondary w-100"
+                                    type="button"
+                                    className="btn btn-block btn-secondary"
                                     onClick={handleReset}
                                   >
                                     Reset
@@ -559,7 +596,11 @@ const ViewPatients = ({ notify, errorToast }) => {
                       overflow: "auto",
                     }}
                   >
-                    <table className="table table-striped table-bordered">
+                    <table
+                      className={`table ${
+                        darkMode ? "table-dark" : "table-striped"
+                      }`}
+                    >
                       <thead>
                         <tr>
                           <th scope="col">#</th>

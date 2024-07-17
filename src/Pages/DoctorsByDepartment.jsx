@@ -12,7 +12,7 @@ import { X } from "lucide-react";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 
-const DoctorsByDepartment = ({ notify, errorToast }) => {
+const DoctorsByDepartment = ({ notify, errorToast, darkMode, setDarkMode }) => {
   const [showModal, setShowModal] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [doctorsData, setDoctorsData] = useState([]);
@@ -170,10 +170,14 @@ const DoctorsByDepartment = ({ notify, errorToast }) => {
             </div>
           ) : (
             <>
-              <div className="flex bg-gray-200">
-                <Sidebar />
+              <div
+                className={`flex h-screen flex-grow-1 ${
+                  darkMode ? "bg-dark text-white" : "bg-gray-200"
+                }`}
+              >
+                <Sidebar darkMode={darkMode} setDarkMode={setDarkMode} />
                 <div className="flex-1 flex flex-col">
-                  <Navbar />
+                  <Navbar darkMode={darkMode} />
                   <div className="container-fluid main-content">
                     <div className="d-flex justify-content-between align-items-center mt-2 mb-3">
                       <div className="col"></div>
@@ -207,7 +211,9 @@ const DoctorsByDepartment = ({ notify, errorToast }) => {
 
                                 <form
                                   onSubmit={formik.handleSubmit}
-                                  className="shadow p-3 mt-5 mb-5 bg-white rounded"
+                                  className={`shadow p-3 mt-5 mb-5 rounded ${
+                                    darkMode ? "bg-dark text-white" : "bg-white"
+                                  }`}
                                   style={{ position: "relative" }}
                                 >
                                   <div
@@ -481,8 +487,12 @@ const DoctorsByDepartment = ({ notify, errorToast }) => {
                       </>
                     )}
                     <div className="table-responsive">
-                      <table className="table">
-                        <thead className="thead-dark">
+                      <table
+                        className={`table ${
+                          darkMode ? "table-dark" : "table-striped"
+                        }`}
+                      >
+                        <thead>
                           <tr>
                             <th scope="col">#</th>
                             <th scope="col">Name</th>
@@ -534,7 +544,7 @@ const DoctorsByDepartment = ({ notify, errorToast }) => {
                         <ResponsivePagination
                           total={totalPages}
                           current={currentPage}
-                          previousLabel="Previous"
+                          previousLabel="Prev"
                           nextLabel="Next"
                           onPageChange={setCurrentPage}
                         />

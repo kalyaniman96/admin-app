@@ -13,7 +13,7 @@ import "react-responsive-pagination/themes/classic.css";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 
-const ViewDepartments = ({ notify, errorToast }) => {
+const ViewDepartments = ({ notify, errorToast, darkMode, setDarkMode }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
@@ -160,10 +160,14 @@ const ViewDepartments = ({ notify, errorToast }) => {
             </div>
           ) : (
             <>
-              <div className="flex bg-gray-200">
-                <Sidebar />
+              <div
+                className={`flex h-screen flex-grow-1 ${
+                  darkMode ? "bg-dark text-white" : "bg-gray-200"
+                }`}
+              >
+                <Sidebar darkMode={darkMode} setDarkMode={setDarkMode} />
                 <div className="flex-1 h-screen flex flex-col">
-                  <Navbar />
+                  <Navbar darkMode={darkMode} />
                   <div className=" container-fluid main-content">
                     <div className="d-flex justify-content-between align-items-center mt-2 mb-3">
                       <div className="col"></div>
@@ -182,7 +186,11 @@ const ViewDepartments = ({ notify, errorToast }) => {
                     {showModal && (
                       <>
                         {/* add department modal */}
-                        <div className="modal-backdrop">
+                        <div
+                          className={`modal-backdrop ${
+                            darkMode ? "modal-dark" : ""
+                          }`}
+                        >
                           <div className="modal-container">
                             <div className="row justify-content-center">
                               <div className="col-md-4 mt-10">
@@ -195,7 +203,9 @@ const ViewDepartments = ({ notify, errorToast }) => {
 
                                 <form
                                   onSubmit={formik.handleSubmit}
-                                  className="shadow p-3 mt-5 mb-5 bg-white rounded"
+                                  className={`shadow p-3 mt-5 mb-5 rounded ${
+                                    darkMode ? "bg-dark text-white" : "bg-white"
+                                  }`}
                                 >
                                   <div
                                     style={{
@@ -287,7 +297,11 @@ const ViewDepartments = ({ notify, errorToast }) => {
                         overflow: "auto",
                       }}
                     >
-                      <table className="table table-striped table-bordered">
+                      <table
+                        className={`table ${
+                          darkMode ? "table-dark" : "table-striped"
+                        }`}
+                      >
                         <thead>
                           <tr>
                             <th scope="col">#</th>

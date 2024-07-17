@@ -2,12 +2,12 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Sidebar from "../Components/Sidebar";
 import Navbar from "../Components/Navbar";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Bar, Pie } from "react-chartjs-2";
 import Chart from "chart.js/auto";
 import Loader from "../Components/Loader";
 
-const Dashboard = () => {
+const Dashboard = ({ darkMode, setDarkMode }) => {
   const [userData, setUserData] = useState({});
   const [doctorsCount, setDoctorsCount] = useState();
   const [patientsData, setPatientsData] = useState();
@@ -24,6 +24,11 @@ const Dashboard = () => {
   const id = localStorage.getItem("user ID");
   const isAuthenticated = localStorage.getItem("isAuthenticated");
   const navigate = useNavigate();
+  console.log("Dark mode is ", darkMode);
+
+  useEffect(() => {
+    document.body.classList.toggle("dark-mode", darkMode);
+  }, [darkMode]);
 
   const getData = async () => {
     const res = await axios.get(`admin/getdata/${id}`);
@@ -150,12 +155,12 @@ const Dashboard = () => {
               <Loader />
             </div>
           ) : (
-            <div>
-              <div className="flex bg-gray-200">
-                <Sidebar />
+            <div className={darkMode ? "dark-mode" : ""}>
+              <div className="body flex bg-gray-200">
+                <Sidebar darkMode={darkMode} setDarkMode={setDarkMode} />
                 <div className="flex-1 flex flex-col">
-                  <Navbar />
-                  <div className="flex-1 z-0 p-6 bg-gray-100">
+                  <Navbar darkMode={darkMode} />
+                  <div className="body flex-1 z-0 p-6 bg-gray-100 ">
                     <div className="container flex-auto">
                       {/* 1st row */}
                       <div className="row flex-auto mb-4">

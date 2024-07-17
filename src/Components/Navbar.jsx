@@ -23,7 +23,7 @@ const customStyles = {
   },
 };
 
-const Navbar = () => {
+const Navbar = ({ darkMode }) => {
   const [modalIsOpen, setIsOpen] = useState(false);
   const [togglePassword, setTogglePassword] = useState(true);
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -96,7 +96,13 @@ const Navbar = () => {
 
   return (
     <>
-      <div className="bg-white shadow p-4 flex z-10 justify-between items-center">
+      <div
+        className={`${
+          darkMode
+            ? "bg-gray-600 shadow p-4 flex z-10 justify-between items-center"
+            : "bg-white shadow p-4 flex z-10 justify-between items-center"
+        }`}
+      >
         <div className="text-xl font-bold">Admin Dashboard</div>
         <div className="relative">
           <button
@@ -143,12 +149,12 @@ const Navbar = () => {
         </div>
       </div>
       {/* Change password modal */}
-      <div className="flex z-30">
+      <div className="flex z-30 ">
         <Modal
           isOpen={modalIsOpen}
           onRequestClose={closeModal}
           style={customStyles}
-          overlayClassName="modal-backdrop"
+          overlayClassName={`modal-backdrop ${darkMode ? "modal-dark" : ""}`}
           contentLabel="Change Password Modal"
         >
           <button onClick={closeModal} className="change_password_close">
@@ -156,7 +162,9 @@ const Navbar = () => {
           </button>
           <form
             onSubmit={handleSubmit}
-            className="shadow p-3 m-5  bg-white rounded"
+            className={`shadow p-3 m-5 rounded ${
+              darkMode ? "bg-dark text-white" : "bg-white"
+            }`}
           >
             <div className="mb-3">
               <h1

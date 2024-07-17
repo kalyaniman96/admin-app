@@ -4,7 +4,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import Sidebar from "../Components/Sidebar";
 import Navbar from "../Components/Navbar";
 
-const EditDoctor = ({ notify }) => {
+const EditDoctor = ({ notify, errorToast, darkMode, setDarkMode }) => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
@@ -106,18 +106,28 @@ const EditDoctor = ({ notify }) => {
   return (
     <>
       {isAuthenticated ? (
-        <div className="flex bg-gray-200">
-          <Sidebar />
+        <div
+          className={`flex flex-grow-1 ${
+            darkMode ? "bg-dark text-white" : "bg-gray-200"
+          }`}
+        >
+          <Sidebar darkMode={darkMode} setDarkMode={setDarkMode} />
           <div className="flex-1 flex flex-col">
-            <Navbar />
-            <div className="card p-4 m-10 ">
-              <div className="form-box">
+            <Navbar darkMode={darkMode} />
+            <div
+              className={`card p-4 m-10 ${
+                darkMode ? "modal-dark bg-dark text-white" : ""
+              } `}
+            >
+              <div className=" form-box ">
                 <h1 className="card-title text-center font-bold">
                   Edit doctor data
                 </h1>
                 <div>
                   <div className="form-group">
-                    <label htmlFor="name">Name*</label>
+                    <label htmlFor="name">
+                      Name<span style={{ color: "red" }}>*</span>
+                    </label>
                     <input
                       className="form-control"
                       id="name"
@@ -130,7 +140,9 @@ const EditDoctor = ({ notify }) => {
                     )}
                   </div>
                   <div className="form-group">
-                    <label htmlFor="email">Email*</label>
+                    <label htmlFor="email">
+                      Email<span style={{ color: "red" }}>*</span>
+                    </label>
                     <input
                       className="form-control"
                       id="email"
@@ -143,7 +155,9 @@ const EditDoctor = ({ notify }) => {
                     )}
                   </div>
                   <div className="form-group">
-                    <label htmlFor="phone">Phone*</label>
+                    <label htmlFor="phone">
+                      Phone<span style={{ color: "red" }}>*</span>
+                    </label>
                     <input
                       className="form-control"
                       id="phone"
@@ -156,7 +170,9 @@ const EditDoctor = ({ notify }) => {
                     )}
                   </div>
                   <div className="form-group">
-                    <label htmlFor="department">Department*</label>
+                    <label htmlFor="department">
+                      Department<span style={{ color: "red" }}>*</span>
+                    </label>
                     <input
                       className="form-control"
                       id="department"
@@ -182,7 +198,9 @@ const EditDoctor = ({ notify }) => {
                     )} */}
                   </div>
                   <div className="form-group">
-                    <label htmlFor="qualification">Qualification*</label>
+                    <label htmlFor="qualification">
+                      Qualification<span style={{ color: "red" }}>*</span>
+                    </label>
                     <input
                       className="form-control"
                       id="qualification"
@@ -195,7 +213,9 @@ const EditDoctor = ({ notify }) => {
                     )}
                   </div>
                   <div className="form-group">
-                    <label htmlFor="experience">Experience*</label>
+                    <label htmlFor="experience">
+                      Experience<span style={{ color: "red" }}>*</span>
+                    </label>
                     <input
                       className="form-control"
                       id="experience"
@@ -209,7 +229,8 @@ const EditDoctor = ({ notify }) => {
                   </div>
                   <div className="form-group">
                     <label htmlFor="hospitalAffiliation">
-                      Hospital Affiliation*
+                      Hospital Affiliation
+                      <span style={{ color: "red" }}>*</span>
                     </label>
                     <input
                       className="form-control"
@@ -225,7 +246,9 @@ const EditDoctor = ({ notify }) => {
                     )} */}
                   </div>
                   <div className="form-group">
-                    <label htmlFor="licenseNumber">License Number*</label>
+                    <label htmlFor="licenseNumber">
+                      License Number<span style={{ color: "red" }}>*</span>
+                    </label>
                     <input
                       className="form-control"
                       id="licenseNumber"
@@ -238,7 +261,9 @@ const EditDoctor = ({ notify }) => {
                     )}
                   </div>
                   <div className="form-group">
-                    <label htmlFor="address">Address*</label>
+                    <label htmlFor="address">
+                      Address<span style={{ color: "red" }}>*</span>
+                    </label>
                     <input
                       className="form-control"
                       id="address"

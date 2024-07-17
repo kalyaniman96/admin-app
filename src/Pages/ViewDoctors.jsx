@@ -13,7 +13,7 @@ import "react-responsive-pagination/themes/classic.css";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 
-const ViewDoctors = ({ notify, errorToast }) => {
+const ViewDoctors = ({ notify, errorToast, darkMode, setDarkMode }) => {
   const [showModal, setShowModal] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
@@ -24,6 +24,8 @@ const ViewDoctors = ({ notify, errorToast }) => {
   const isAuthenticated = localStorage.getItem("isAuthenticated");
   const navigate = useNavigate();
   const doctorsPerPage = 5;
+
+  // console.log("dark mode is ", darkMode);
 
   // Fetch all doctors data
   const getDoctorData = async () => {
@@ -193,10 +195,14 @@ const ViewDoctors = ({ notify, errorToast }) => {
               <Loader />
             </div>
           ) : (
-            <div className="flex h-screen bg-gray-200">
-              <Sidebar />
+            <div
+              className={`flex h-screen flex-grow-1 ${
+                darkMode ? "bg-dark text-white" : "bg-gray-200"
+              }`}
+            >
+              <Sidebar darkMode={darkMode} setDarkMode={setDarkMode} />
               <div className="flex-1 flex flex-col">
-                <Navbar />
+                <Navbar darkMode={darkMode} />
                 <div className="container-fluid main-content">
                   <div className="d-flex justify-content-between align-items-center mt-2 mb-3">
                     <div className="col"></div>
@@ -213,9 +219,11 @@ const ViewDoctors = ({ notify, errorToast }) => {
                       </button>
                     </div>
                     <div className="col">
-                      <div className="float-right relative z-0">
+                      <div className=" float-right relative z-0 ">
                         <select
-                          className="form-select"
+                          className={`form-select ${
+                            darkMode ? "bg-gray-600 text-white" : ""
+                          }`}
                           value={selectedDepartment}
                           onChange={(e) =>
                             setSelectedDepartment(e.target.value)
@@ -235,7 +243,11 @@ const ViewDoctors = ({ notify, errorToast }) => {
                     className="table-responsive"
                     style={{ overflowX: "auto" }}
                   >
-                    <table className="table table-striped">
+                    <table
+                      className={`table ${
+                        darkMode ? "table-dark" : "table-striped"
+                      }`}
+                    >
                       <thead>
                         <tr>
                           <th>#</th>
@@ -301,6 +313,7 @@ const ViewDoctors = ({ notify, errorToast }) => {
                   {!isLoading && (
                     <div className="mt-3">
                       <ResponsivePagination
+                        // className={`${darkMode ? "pagination-dark" : ""}`}
                         total={totalPages}
                         current={currentPage}
                         onPageChange={setCurrentPage}
@@ -316,21 +329,23 @@ const ViewDoctors = ({ notify, errorToast }) => {
           )}
           {/* Add Doctor Modal */}
           <div
-            className={`modal ${showModal ? "d-block show" : ""}`}
+            className={`modal ${showModal ? "d-block show" : ""} ${
+              darkMode ? "modal-dark" : ""
+            }`}
             tabIndex="-1"
             role="dialog"
           >
             <div className="modal-dialog modal-dialog-centered" role="document">
               <div className="modal-content">
                 <div className="modal-header justify-content-center">
-                  <h5 className="modal-title  font-bold">Add Doctor</h5>
+                  <h5 className="modal-title font-bold">Add Doctor</h5>
                   <button
                     type="button"
                     className="close position-absolute"
                     onClick={handleClose}
                     style={{ right: "10px" }}
                   >
-                    <X className="w-6 h-6" />
+                    <span>&times;</span>
                   </button>
                 </div>
                 <div className="modal-body">
