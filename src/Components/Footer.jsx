@@ -2,7 +2,7 @@ import React from "react";
 
 const Footer = ({ darkMode }) => {
   return (
-    <>
+    <div className="mt-2">
       <footer
         style={{
           display: "flex",
@@ -16,7 +16,7 @@ const Footer = ({ darkMode }) => {
       >
         &copy; {new Date().getFullYear()} Iman Kalyan Halder
       </footer>
-    </>
+    </div>
   );
 };
 

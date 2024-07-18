@@ -161,7 +161,7 @@ const Dashboard = ({ darkMode, setDarkMode }) => {
                 <Sidebar darkMode={darkMode} setDarkMode={setDarkMode} />
                 <div className="flex-1 flex flex-col">
                   <Navbar darkMode={darkMode} />
-                  <div className="body flex-1 z-0 p-6 bg-gray-100 ">
+                  <div className="body container-fluid h-screen flex-1 z-0 p-6 ">
                     <div className="container flex-auto">
                       {/* 1st row */}
                       <div className="row flex-auto mb-4">
