@@ -3,6 +3,7 @@ import axios from "axios";
 import { useLocation, useNavigate } from "react-router-dom";
 import Sidebar from "../Components/Sidebar";
 import Navbar from "../Components/Navbar";
+import Footer from "../Components/Footer";
 
 const EditDoctor = ({ notify, errorToast, darkMode, setDarkMode }) => {
   const [name, setName] = useState("");
@@ -292,6 +293,7 @@ const EditDoctor = ({ notify, errorToast, darkMode, setDarkMode }) => {
                 </div>
               </div>
             </div>
+            <Footer darkMode={darkMode} />
           </div>
         </div>
       ) : (

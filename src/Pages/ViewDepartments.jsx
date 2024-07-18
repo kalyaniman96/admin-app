@@ -12,6 +12,7 @@ import ResponsivePagination from "react-responsive-pagination";
 import "react-responsive-pagination/themes/classic.css";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
+import Footer from "../Components/Footer";
 
 const ViewDepartments = ({ notify, errorToast, darkMode, setDarkMode }) => {
   const [isLoading, setIsLoading] = useState(true);
@@ -159,7 +160,7 @@ const ViewDepartments = ({ notify, errorToast, darkMode, setDarkMode }) => {
               <Loader />
             </div>
           ) : (
-            <>
+            <div>
               <div
                 className={`flex h-screen flex-grow-1 ${
                   darkMode ? "bg-dark text-white" : "bg-gray-200"
@@ -168,7 +169,7 @@ const ViewDepartments = ({ notify, errorToast, darkMode, setDarkMode }) => {
                 <Sidebar darkMode={darkMode} setDarkMode={setDarkMode} />
                 <div className="flex-1 h-screen flex flex-col">
                   <Navbar darkMode={darkMode} />
-                  <div className=" container-fluid main-content">
+                  <div className=" container-fluid h-screen main-content">
                     <div className="d-flex justify-content-between align-items-center mt-2 mb-3">
                       <div className="col"></div>
                       <div className="col-auto">
@@ -325,7 +326,11 @@ const ViewDepartments = ({ notify, errorToast, darkMode, setDarkMode }) => {
                                 <td>{department.name}</td>
                                 <td>
                                   <button
-                                    className="button-link"
+                                    className={`${
+                                      darkMode
+                                        ? "button-link-dark-mode"
+                                        : "button-link"
+                                    }`}
                                     onClick={() =>
                                       viewDoctorsByDepartment(department._id)
                                     }
@@ -335,7 +340,11 @@ const ViewDepartments = ({ notify, errorToast, darkMode, setDarkMode }) => {
                                 </td>
                                 <td>
                                   <button
-                                    className="button-link"
+                                    className={`${
+                                      darkMode
+                                        ? "button-link-dark-mode"
+                                        : "button-link"
+                                    }`}
                                     to="/patientsbydepartment"
                                     onClick={() =>
                                       viewPatientsByDepartment(department._id)
@@ -395,9 +404,10 @@ const ViewDepartments = ({ notify, errorToast, darkMode, setDarkMode }) => {
                       />
                     </div>
                   </div>
+                  <Footer darkMode={darkMode} />
                 </div>
               </div>
-            </>
+            </div>
           )}
         </div>
       ) : (

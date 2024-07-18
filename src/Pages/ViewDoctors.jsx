@@ -12,6 +12,7 @@ import ResponsivePagination from "react-responsive-pagination";
 import "react-responsive-pagination/themes/classic.css";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
+import Footer from "../Components/Footer";
 
 const ViewDoctors = ({ notify, errorToast, darkMode, setDarkMode }) => {
   const [showModal, setShowModal] = useState(false);
@@ -196,7 +197,7 @@ const ViewDoctors = ({ notify, errorToast, darkMode, setDarkMode }) => {
             </div>
           ) : (
             <div
-              className={`flex h-screen flex-grow-1 ${
+              className={`flex flex-grow-1 ${
                 darkMode ? "bg-dark text-white" : "bg-gray-200"
               }`}
             >
@@ -236,6 +237,265 @@ const ViewDoctors = ({ notify, errorToast, darkMode, setDarkMode }) => {
                             </option>
                           ))}
                         </select>
+                      </div>
+                    </div>
+                  </div>
+                  {/* Add Doctor Modal */}
+                  <div
+                    className={`modal ${showModal ? "d-block show" : ""} ${
+                      darkMode ? "modal-dark" : ""
+                    }`}
+                    tabIndex="-1"
+                    role="dialog"
+                  >
+                    <div
+                      className="modal-dialog modal-dialog-centered"
+                      role="document"
+                    >
+                      <div className="modal-content">
+                        <div className="modal-header justify-content-center">
+                          <h5 className="modal-title font-bold">Add Doctor</h5>
+                          <button
+                            type="button"
+                            className="close position-absolute"
+                            onClick={handleClose}
+                            style={{ right: "10px" }}
+                          >
+                            <span>&times;</span>
+                          </button>
+                        </div>
+                        <div className="modal-body">
+                          <form onSubmit={formik.handleSubmit}>
+                            <div
+                              style={{ overflowY: "auto", maxHeight: "550px" }}
+                            >
+                              <div className="form-group">
+                                <label htmlFor="name">
+                                  Name<span style={{ color: "red" }}>*</span>
+                                </label>
+                                <input
+                                  type="text"
+                                  className="form-control"
+                                  id="name"
+                                  name="name"
+                                  onChange={formik.handleChange}
+                                  onBlur={formik.handleBlur}
+                                  value={formik.values.name}
+                                />
+                                {formik.touched.name && formik.errors.name ? (
+                                  <div className="text-danger">
+                                    {formik.errors.name}
+                                  </div>
+                                ) : null}
+                              </div>
+                              <div className="form-group">
+                                <label htmlFor="email">
+                                  Email<span style={{ color: "red" }}>*</span>
+                                </label>
+                                <input
+                                  type="email"
+                                  className="form-control"
+                                  id="email"
+                                  name="email"
+                                  onChange={formik.handleChange}
+                                  onBlur={formik.handleBlur}
+                                  value={formik.values.email}
+                                />
+                                {formik.touched.email && formik.errors.email ? (
+                                  <div className="text-danger">
+                                    {formik.errors.email}
+                                  </div>
+                                ) : null}
+                              </div>
+                              <div className="form-group">
+                                <label htmlFor="phone">
+                                  Phone<span style={{ color: "red" }}>*</span>
+                                </label>
+                                <input
+                                  type="text"
+                                  className="form-control"
+                                  id="phone"
+                                  name="phone"
+                                  onChange={formik.handleChange}
+                                  onBlur={formik.handleBlur}
+                                  value={formik.values.phone}
+                                />
+                                {formik.touched.phone && formik.errors.phone ? (
+                                  <div className="text-danger">
+                                    {formik.errors.phone}
+                                  </div>
+                                ) : null}
+                              </div>
+                              <div className="form-group">
+                                <label htmlFor="department">
+                                  Department
+                                  <span style={{ color: "red" }}>*</span>
+                                </label>
+                                <select
+                                  className="form-control"
+                                  id="department"
+                                  name="department"
+                                  onChange={formik.handleChange}
+                                  onBlur={formik.handleBlur}
+                                  value={formik.values.department}
+                                >
+                                  <option value="">Select department</option>
+                                  {departmentData.map((department) => (
+                                    <option key={department} value={department}>
+                                      {department}
+                                    </option>
+                                  ))}
+                                </select>
+                                {formik.touched.department &&
+                                formik.errors.department ? (
+                                  <div className="text-danger">
+                                    {formik.errors.department}
+                                  </div>
+                                ) : null}
+                              </div>
+                              <div className="form-group">
+                                <label htmlFor="gender">Gender</label>
+                                <select
+                                  className="form-control"
+                                  id="gender"
+                                  name="gender"
+                                  onChange={formik.handleChange}
+                                  onBlur={formik.handleBlur}
+                                  value={formik.values.gender}
+                                >
+                                  <option value="">Select Gender</option>
+                                  <option value="male">Male</option>
+                                  <option value="female">Female</option>
+                                  <option value="other">Other</option>
+                                </select>
+                                {formik.touched.gender &&
+                                formik.errors.gender ? (
+                                  <div className="text-danger">
+                                    {formik.errors.gender}
+                                  </div>
+                                ) : null}
+                              </div>
+                              <div className="form-group">
+                                <label htmlFor="qualification">
+                                  Qualification
+                                  <span style={{ color: "red" }}>*</span>
+                                </label>
+                                <input
+                                  type="text"
+                                  className="form-control"
+                                  id="qualification"
+                                  name="qualification"
+                                  onChange={formik.handleChange}
+                                  onBlur={formik.handleBlur}
+                                  value={formik.values.qualification}
+                                />
+                                {formik.touched.qualification &&
+                                formik.errors.qualification ? (
+                                  <div className="text-danger">
+                                    {formik.errors.qualification}
+                                  </div>
+                                ) : null}
+                              </div>
+                              <div className="form-group">
+                                <label htmlFor="experience">
+                                  Experience
+                                  <span style={{ color: "red" }}>*</span>
+                                </label>
+                                <input
+                                  type="text"
+                                  className="form-control"
+                                  id="experience"
+                                  name="experience"
+                                  onChange={formik.handleChange}
+                                  onBlur={formik.handleBlur}
+                                  value={formik.values.experience}
+                                />
+                                {formik.touched.experience &&
+                                formik.errors.experience ? (
+                                  <div className="text-danger">
+                                    {formik.errors.experience}
+                                  </div>
+                                ) : null}
+                              </div>
+                              <div className="form-group">
+                                <label htmlFor="hospitalAffiliation">
+                                  Hospital Affiliation
+                                </label>
+                                <input
+                                  type="text"
+                                  className="form-control"
+                                  id="hospitalAffiliation"
+                                  name="hospitalAffiliation"
+                                  onChange={formik.handleChange}
+                                  onBlur={formik.handleBlur}
+                                  value={formik.values.hospitalAffiliation}
+                                />
+                                {formik.touched.hospitalAffiliation &&
+                                formik.errors.hospitalAffiliation ? (
+                                  <div className="text-danger">
+                                    {formik.errors.hospitalAffiliation}
+                                  </div>
+                                ) : null}
+                              </div>
+                              <div className="form-group">
+                                <label htmlFor="licenseNumber">
+                                  License Number
+                                  <span style={{ color: "red" }}>*</span>
+                                </label>
+                                <input
+                                  type="text"
+                                  className="form-control"
+                                  id="licenseNumber"
+                                  name="licenseNumber"
+                                  onChange={formik.handleChange}
+                                  onBlur={formik.handleBlur}
+                                  value={formik.values.licenseNumber}
+                                />
+                                {formik.touched.licenseNumber &&
+                                formik.errors.licenseNumber ? (
+                                  <div className="text-danger">
+                                    {formik.errors.licenseNumber}
+                                  </div>
+                                ) : null}
+                              </div>
+                              <div className="form-group">
+                                <label htmlFor="address">
+                                  Address<span style={{ color: "red" }}>*</span>
+                                </label>
+                                <input
+                                  type="text"
+                                  className="form-control"
+                                  id="address"
+                                  name="address"
+                                  onChange={formik.handleChange}
+                                  onBlur={formik.handleBlur}
+                                  value={formik.values.address}
+                                />
+                                {formik.touched.address &&
+                                formik.errors.address ? (
+                                  <div className="text-danger">
+                                    {formik.errors.address}
+                                  </div>
+                                ) : null}
+                              </div>
+                            </div>
+                            <div className="modal-footer">
+                              <button
+                                type="submit"
+                                className="btn btn-primary btn-block"
+                              >
+                                Submit
+                              </button>
+                              <button
+                                type="button"
+                                className="btn btn-secondary btn-block"
+                                onClick={handleReset}
+                              >
+                                Reset
+                              </button>
+                            </div>
+                          </form>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -310,271 +570,23 @@ const ViewDoctors = ({ notify, errorToast, darkMode, setDarkMode }) => {
                       </tbody>
                     </table>
                   </div>
-                  {!isLoading && (
-                    <div className="mt-3">
-                      <ResponsivePagination
-                        // className={`${darkMode ? "pagination-dark" : ""}`}
-                        total={totalPages}
-                        current={currentPage}
-                        onPageChange={setCurrentPage}
-                        showPageSizeOptions={true}
-                        previousLabel="Prev"
-                        nextLabel="Next"
-                      />
-                    </div>
-                  )}
+
+                  <div className="mt-3">
+                    <ResponsivePagination
+                      // className={`${darkMode ? "pagination-dark" : ""}`}
+                      total={totalPages}
+                      current={currentPage}
+                      onPageChange={setCurrentPage}
+                      showPageSizeOptions={true}
+                      previousLabel="Prev"
+                      nextLabel="Next"
+                    />
+                  </div>
                 </div>
+                <Footer darkMode={darkMode} />
               </div>
             </div>
           )}
-          {/* Add Doctor Modal */}
-          <div
-            className={`modal ${showModal ? "d-block show" : ""} ${
-              darkMode ? "modal-dark" : ""
-            }`}
-            tabIndex="-1"
-            role="dialog"
-          >
-            <div className="modal-dialog modal-dialog-centered" role="document">
-              <div className="modal-content">
-                <div className="modal-header justify-content-center">
-                  <h5 className="modal-title font-bold">Add Doctor</h5>
-                  <button
-                    type="button"
-                    className="close position-absolute"
-                    onClick={handleClose}
-                    style={{ right: "10px" }}
-                  >
-                    <span>&times;</span>
-                  </button>
-                </div>
-                <div className="modal-body">
-                  <form onSubmit={formik.handleSubmit}>
-                    <div style={{ overflowY: "auto", maxHeight: "550px" }}>
-                      <div className="form-group">
-                        <label htmlFor="name">
-                          Name<span style={{ color: "red" }}>*</span>
-                        </label>
-                        <input
-                          type="text"
-                          className="form-control"
-                          id="name"
-                          name="name"
-                          onChange={formik.handleChange}
-                          onBlur={formik.handleBlur}
-                          value={formik.values.name}
-                        />
-                        {formik.touched.name && formik.errors.name ? (
-                          <div className="text-danger">
-                            {formik.errors.name}
-                          </div>
-                        ) : null}
-                      </div>
-                      <div className="form-group">
-                        <label htmlFor="email">
-                          Email<span style={{ color: "red" }}>*</span>
-                        </label>
-                        <input
-                          type="email"
-                          className="form-control"
-                          id="email"
-                          name="email"
-                          onChange={formik.handleChange}
-                          onBlur={formik.handleBlur}
-                          value={formik.values.email}
-                        />
-                        {formik.touched.email && formik.errors.email ? (
-                          <div className="text-danger">
-                            {formik.errors.email}
-                          </div>
-                        ) : null}
-                      </div>
-                      <div className="form-group">
-                        <label htmlFor="phone">
-                          Phone<span style={{ color: "red" }}>*</span>
-                        </label>
-                        <input
-                          type="text"
-                          className="form-control"
-                          id="phone"
-                          name="phone"
-                          onChange={formik.handleChange}
-                          onBlur={formik.handleBlur}
-                          value={formik.values.phone}
-                        />
-                        {formik.touched.phone && formik.errors.phone ? (
-                          <div className="text-danger">
-                            {formik.errors.phone}
-                          </div>
-                        ) : null}
-                      </div>
-                      <div className="form-group">
-                        <label htmlFor="department">
-                          Department<span style={{ color: "red" }}>*</span>
-                        </label>
-                        <select
-                          className="form-control"
-                          id="department"
-                          name="department"
-                          onChange={formik.handleChange}
-                          onBlur={formik.handleBlur}
-                          value={formik.values.department}
-                        >
-                          <option value="">Select department</option>
-                          {departmentData.map((department) => (
-                            <option key={department} value={department}>
-                              {department}
-                            </option>
-                          ))}
-                        </select>
-                        {formik.touched.department &&
-                        formik.errors.department ? (
-                          <div className="text-danger">
-                            {formik.errors.department}
-                          </div>
-                        ) : null}
-                      </div>
-                      <div className="form-group">
-                        <label htmlFor="gender">Gender</label>
-                        <select
-                          className="form-control"
-                          id="gender"
-                          name="gender"
-                          onChange={formik.handleChange}
-                          onBlur={formik.handleBlur}
-                          value={formik.values.gender}
-                        >
-                          <option value="">Select Gender</option>
-                          <option value="male">Male</option>
-                          <option value="female">Female</option>
-                          <option value="other">Other</option>
-                        </select>
-                        {formik.touched.gender && formik.errors.gender ? (
-                          <div className="text-danger">
-                            {formik.errors.gender}
-                          </div>
-                        ) : null}
-                      </div>
-                      <div className="form-group">
-                        <label htmlFor="qualification">
-                          Qualification<span style={{ color: "red" }}>*</span>
-                        </label>
-                        <input
-                          type="text"
-                          className="form-control"
-                          id="qualification"
-                          name="qualification"
-                          onChange={formik.handleChange}
-                          onBlur={formik.handleBlur}
-                          value={formik.values.qualification}
-                        />
-                        {formik.touched.qualification &&
-                        formik.errors.qualification ? (
-                          <div className="text-danger">
-                            {formik.errors.qualification}
-                          </div>
-                        ) : null}
-                      </div>
-                      <div className="form-group">
-                        <label htmlFor="experience">
-                          Experience<span style={{ color: "red" }}>*</span>
-                        </label>
-                        <input
-                          type="text"
-                          className="form-control"
-                          id="experience"
-                          name="experience"
-                          onChange={formik.handleChange}
-                          onBlur={formik.handleBlur}
-                          value={formik.values.experience}
-                        />
-                        {formik.touched.experience &&
-                        formik.errors.experience ? (
-                          <div className="text-danger">
-                            {formik.errors.experience}
-                          </div>
-                        ) : null}
-                      </div>
-                      <div className="form-group">
-                        <label htmlFor="hospitalAffiliation">
-                          Hospital Affiliation
-                        </label>
-                        <input
-                          type="text"
-                          className="form-control"
-                          id="hospitalAffiliation"
-                          name="hospitalAffiliation"
-                          onChange={formik.handleChange}
-                          onBlur={formik.handleBlur}
-                          value={formik.values.hospitalAffiliation}
-                        />
-                        {formik.touched.hospitalAffiliation &&
-                        formik.errors.hospitalAffiliation ? (
-                          <div className="text-danger">
-                            {formik.errors.hospitalAffiliation}
-                          </div>
-                        ) : null}
-                      </div>
-                      <div className="form-group">
-                        <label htmlFor="licenseNumber">
-                          License Number<span style={{ color: "red" }}>*</span>
-                        </label>
-                        <input
-                          type="text"
-                          className="form-control"
-                          id="licenseNumber"
-                          name="licenseNumber"
-                          onChange={formik.handleChange}
-                          onBlur={formik.handleBlur}
-                          value={formik.values.licenseNumber}
-                        />
-                        {formik.touched.licenseNumber &&
-                        formik.errors.licenseNumber ? (
-                          <div className="text-danger">
-                            {formik.errors.licenseNumber}
-                          </div>
-                        ) : null}
-                      </div>
-                      <div className="form-group">
-                        <label htmlFor="address">
-                          Address<span style={{ color: "red" }}>*</span>
-                        </label>
-                        <input
-                          type="text"
-                          className="form-control"
-                          id="address"
-                          name="address"
-                          onChange={formik.handleChange}
-                          onBlur={formik.handleBlur}
-                          value={formik.values.address}
-                        />
-                        {formik.touched.address && formik.errors.address ? (
-                          <div className="text-danger">
-                            {formik.errors.address}
-                          </div>
-                        ) : null}
-                      </div>
-                    </div>
-                    <div className="modal-footer">
-                      <button
-                        type="submit"
-                        className="btn btn-primary btn-block"
-                      >
-                        Submit
-                      </button>
-                      <button
-                        type="button"
-                        className="btn btn-secondary btn-block"
-                        onClick={handleReset}
-                      >
-                        Reset
-                      </button>
-                    </div>
-                  </form>
-                </div>
-              </div>
-            </div>
-          </div>
         </div>
       ) : (
         navigate("/login")

@@ -125,8 +125,19 @@
   transition: border-color 0.2s ease;
 }
 
+.button-link-dark-mode {
+  color: rgb(0, 170, 255);
+  text-decoration: none;
+  cursor: pointer;
+  transition: border-color 0.2s ease;
+}
+
 .button-link:hover {
   border-bottom: 1px solid blue;
+}
+
+.button-link-dark-mode:hover {
+  border-bottom: 1px solid rgb(0, 170, 255);
 }
 
 /* Dark mode styles */

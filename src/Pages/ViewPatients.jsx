@@ -12,6 +12,7 @@ import "react-responsive-pagination/themes/classic.css";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import Loader from "../Components/Loader";
+import Footer from "../Components/Footer";
 
 const ViewPatients = ({ notify, errorToast, darkMode, setDarkMode }) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -215,7 +216,7 @@ const ViewPatients = ({ notify, errorToast, darkMode, setDarkMode }) => {
             </div>
           ) : (
             <div
-              className={`flex h-screen flex-grow-1 ${
+              className={`flex flex-grow-1 ${
                 darkMode ? "bg-dark text-white" : "bg-gray-200"
               }`}
             >
@@ -223,7 +224,7 @@ const ViewPatients = ({ notify, errorToast, darkMode, setDarkMode }) => {
               <div className="flex flex-column flex-grow-1">
                 <Navbar darkMode={darkMode} />
                 <div
-                  className={`container-fluid main-content flex-grow-1 d-flex flex-column ${
+                  className={`container-fluid main-content flex flex-grow-1 h-screen flex-column ${
                     darkMode ? "bg-dark text-white" : ""
                   }`}
                 >
@@ -693,6 +694,7 @@ const ViewPatients = ({ notify, errorToast, darkMode, setDarkMode }) => {
                   </div>
                 </div> */}
                 </div>
+                <Footer darkMode={darkMode} />
               </div>
             </div>
           )}

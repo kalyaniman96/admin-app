@@ -4,6 +4,7 @@ import axios from "axios";
 import Sidebar from "../Components/Sidebar";
 import Navbar from "../Components/Navbar";
 import Loader from "../Components/Loader";
+import Footer from "../Components/Footer";
 
 const Profile = ({ darkMode, setDarkMode }) => {
   const [userData, setUserData] = useState({});
@@ -64,7 +65,7 @@ const Profile = ({ darkMode, setDarkMode }) => {
               <Loader />
             </div>
           ) : (
-            <>
+            <div>
               <div
                 className={`flex h-screen flex-grow-1 ${
                   darkMode ? "bg-dark text-white" : "bg-gray-200"
@@ -80,7 +81,7 @@ const Profile = ({ darkMode, setDarkMode }) => {
                       style={{ fontWeight: "bold" }}
                     >{`Welcome ${userData.email}`}</h1>
                   </div>
-                  <div className="container-fluid">
+                  <div className="container-fluid h-screen">
                     <div className="row d-flex justify-content-between">
                       <div className="col-auto">
                         <button onClick={() => navigate("/dashboard")}>
@@ -92,9 +93,10 @@ const Profile = ({ darkMode, setDarkMode }) => {
                       </div>
                     </div>
                   </div>
+                  <Footer darkMode={darkMode} />
                 </div>
               </div>
-            </>
+            </div>
           )}
         </div>
       ) : (

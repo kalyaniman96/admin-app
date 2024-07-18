@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { Bar, Pie } from "react-chartjs-2";
 import Chart from "chart.js/auto";
 import Loader from "../Components/Loader";
+import Footer from "../Components/Footer";
 
 const Dashboard = ({ darkMode, setDarkMode }) => {
   const [userData, setUserData] = useState({});
@@ -270,6 +271,7 @@ const Dashboard = ({ darkMode, setDarkMode }) => {
                       </div>
                     </div>
                   </div>
+                  <Footer darkMode={darkMode} />
                 </div>
               </div>
             </div>

@@ -11,6 +11,7 @@ import { useFormik } from "formik";
 import { X } from "lucide-react";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
+import Footer from "../Components/Footer";
 
 const DoctorsByDepartment = ({ notify, errorToast, darkMode, setDarkMode }) => {
   const [showModal, setShowModal] = useState(false);
@@ -169,9 +170,9 @@ const DoctorsByDepartment = ({ notify, errorToast, darkMode, setDarkMode }) => {
               <Loader />
             </div>
           ) : (
-            <>
+            <div>
               <div
-                className={`flex h-screen flex-grow-1 ${
+                className={`flex flex-grow-1 ${
                   darkMode ? "bg-dark text-white" : "bg-gray-200"
                 }`}
               >
@@ -563,9 +564,10 @@ const DoctorsByDepartment = ({ notify, errorToast, darkMode, setDarkMode }) => {
                       </div>
                     </div>
                   </div>
+                  <Footer darkMode={darkMode} />
                 </div>
               </div>
-            </>
+            </div>
           )}
         </div>
       ) : (

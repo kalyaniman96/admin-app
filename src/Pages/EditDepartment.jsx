@@ -3,6 +3,7 @@ import axios from "axios";
 import { useLocation, useNavigate } from "react-router-dom";
 import Sidebar from "../Components/Sidebar";
 import Navbar from "../Components/Navbar";
+import Footer from "../Components/Footer";
 
 const EditDepartment = ({ notify, errorToast, darkMode, setDarkMode }) => {
   const [name, setName] = useState("");
@@ -77,64 +78,67 @@ const EditDepartment = ({ notify, errorToast, darkMode, setDarkMode }) => {
           <Sidebar darkMode={darkMode} setDarkMode={setDarkMode} />
           <div className="flex-1 flex flex-col">
             <Navbar darkMode={darkMode} />
-            <div
-              className={`card p-4 m-10 ${
-                darkMode ? "bg-dark text-white" : ""
-              } `}
-            >
-              <div className=" form-box ">
-                <h1 className="card-title text-center font-bold">
-                  Edit department data
-                </h1>
-                <div>
-                  <div className="form-group">
-                    <label htmlFor="name">
-                      Name<span style={{ color: "red" }}>*</span>
-                    </label>
-                    <input
-                      className="form-control"
-                      id="name"
-                      type="text"
-                      value={name}
-                      onChange={(e) => setName(e.target.value)}
-                    />
-                    {errors.name && (
-                      <p className="text-red-500">{errors.name}</p>
-                    )}
-                  </div>
-                  <div className="form-group">
-                    <label htmlFor="description">
-                      Description<span style={{ color: "red" }}>*</span>
-                    </label>
-                    <input
-                      className="form-control"
-                      id="description"
-                      type="description"
-                      value={description}
-                      onChange={(e) => setDescription(e.target.value)}
-                    />
-                    {errors.description && (
-                      <p className="text-red-500">{errors.description}</p>
-                    )}
-                  </div>
+            <div className="h-screen">
+              <div
+                className={`card p-4 m-10 ${
+                  darkMode ? "bg-dark text-white" : ""
+                } `}
+              >
+                <div className=" form-box ">
+                  <h1 className="card-title text-center font-bold">
+                    Edit department data
+                  </h1>
+                  <div>
+                    <div className="form-group">
+                      <label htmlFor="name">
+                        Name<span style={{ color: "red" }}>*</span>
+                      </label>
+                      <input
+                        className="form-control"
+                        id="name"
+                        type="text"
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                      />
+                      {errors.name && (
+                        <p className="text-red-500">{errors.name}</p>
+                      )}
+                    </div>
+                    <div className="form-group">
+                      <label htmlFor="description">
+                        Description<span style={{ color: "red" }}>*</span>
+                      </label>
+                      <input
+                        className="form-control"
+                        id="description"
+                        type="description"
+                        value={description}
+                        onChange={(e) => setDescription(e.target.value)}
+                      />
+                      {errors.description && (
+                        <p className="text-red-500">{errors.description}</p>
+                      )}
+                    </div>
 
-                  <div className="flex justify-start items-center space-x-2 mt-4">
-                    <button
-                      className="btn btn-secondary"
-                      onClick={() => navigate(-1)}
-                    >
-                      <i className="fa fa-sm fa-solid fa-arrow-left"> Back</i>
-                    </button>
-                    <input
-                      className="btn btn-primary"
-                      value="Submit"
-                      type="submit"
-                      onClick={() => validateFormAndUpdate()}
-                    />
+                    <div className="flex justify-start items-center space-x-2 mt-4">
+                      <button
+                        className="btn btn-secondary"
+                        onClick={() => navigate(-1)}
+                      >
+                        <i className="fa fa-sm fa-solid fa-arrow-left"> Back</i>
+                      </button>
+                      <input
+                        className="btn btn-primary"
+                        value="Submit"
+                        type="submit"
+                        onClick={() => validateFormAndUpdate()}
+                      />
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
+            <Footer darkMode={darkMode} />
           </div>
         </div>
       ) : (
