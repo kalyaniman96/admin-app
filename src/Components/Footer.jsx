@@ -2,7 +2,7 @@ import React from "react";
 
 const Footer = ({ darkMode }) => {
   return (
-    <div className="mt-2">
+    <div>
       <footer
         style={{
           display: "flex",

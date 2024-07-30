@@ -87,10 +87,16 @@ const Sidebar = ({ darkMode, setDarkMode }) => {
               >
                 Departments
               </Link>
+              <Link
+                to="/viewappointments"
+                className="block px-4 py-2 text-green-300 hover:bg-gray-700"
+              >
+                Appointments
+              </Link>
             </div>
           )}
           <button
-            className="block px-4 py-2 hover:bg-gray-700"
+            className=" block px-4 py-2 hover:bg-gray-700"
             onClick={toggleDarkMode}
           >
             {!isCollapsed && (

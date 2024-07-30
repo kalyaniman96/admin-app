@@ -180,6 +180,8 @@ const ViewDepartments = ({ notify, errorToast, darkMode, setDarkMode }) => {
                           style={{ width: "70px", height: "70px" }}
                         >
                           <i className="fa fa-building fa-2x"></i>
+                          <br />
+                          <i className="fa fa-plus"></i>
                         </button>
                       </div>
                       <div className="col"></div>

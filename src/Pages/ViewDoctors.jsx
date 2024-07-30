@@ -571,7 +571,7 @@ const ViewDoctors = ({ notify, errorToast, darkMode, setDarkMode }) => {
                     </table>
                   </div>
 
-                  <div className="mt-3">
+                  <div className="p-3">
                     <ResponsivePagination
                       // className={`${darkMode ? "pagination-dark" : ""}`}
                       total={totalPages}
@@ -589,7 +589,7 @@ const ViewDoctors = ({ notify, errorToast, darkMode, setDarkMode }) => {
           )}
         </div>
       ) : (
-        navigate("/login")
+        navigate("/")
       )}
     </>
   );

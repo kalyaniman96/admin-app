@@ -17,6 +17,8 @@ import DoctorsByDepartment from "./Pages/DoctorsByDepartment";
 import PatientsByDepartment from "./Pages/PatientsByDepartment";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import ViewAppointments from "./Pages/ViewAppointments";
+import EditAppointment from "./Pages/EditAppointment";
 
 const App = () => {
   const [darkMode, setDarkMode] = useState(false);
@@ -175,6 +177,28 @@ const App = () => {
             path="/editdepartment"
             element={
               <EditDepartment
+                notify={notify}
+                errorToast={errorToast}
+                darkMode={darkMode}
+                setDarkMode={setDarkMode}
+              />
+            }
+          ></Route>
+          <Route
+            path="/viewappointments"
+            element={
+              <ViewAppointments
+                notify={notify}
+                errorToast={errorToast}
+                darkMode={darkMode}
+                setDarkMode={setDarkMode}
+              />
+            }
+          ></Route>
+          <Route
+            path="/editappointment"
+            element={
+              <EditAppointment
                 notify={notify}
                 errorToast={errorToast}
                 darkMode={darkMode}

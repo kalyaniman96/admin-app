@@ -230,6 +230,13 @@
   color: #dc3545; /* Red text color for error messages */
 }
 
+/* dark theme for date input field in the create appointment modal in ViewAppointments page */
+.input-dark {
+  background-color: #495057;
+  color: #fff;
+  border: 1px solid #343a40;
+}
+
 /* Dark Mode Pagination Styles */
 .pagination-dark {
   /* Dark mode specific styles */

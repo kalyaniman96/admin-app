@@ -571,7 +571,7 @@ const DoctorsByDepartment = ({ notify, errorToast, darkMode, setDarkMode }) => {
           )}
         </div>
       ) : (
-        navigate("/login")
+        navigate("/")
       )}
     </>
   );

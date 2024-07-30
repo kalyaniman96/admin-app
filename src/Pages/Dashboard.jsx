@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import dateFormat from "dateformat";
 import Sidebar from "../Components/Sidebar";
 import Navbar from "../Components/Navbar";
 import { useNavigate } from "react-router-dom";
@@ -13,6 +14,8 @@ const Dashboard = ({ darkMode, setDarkMode }) => {
   const [doctorsCount, setDoctorsCount] = useState();
   const [patientsData, setPatientsData] = useState();
   const [departmentsCount, setDepartmentsCount] = useState();
+  const [dayOfAppointment, setDayOfAppointment] = useState();
+  const [appointmentsCount, setAppointmentsCount] = useState();
   const [cardiologyPatients, setCardiologyPatients] = useState([]);
   const [neurologyPatients, setNeurologyPatients] = useState([]);
   const [pediatricsPatients, setPediatricsPatients] = useState([]);
@@ -21,6 +24,13 @@ const Dashboard = ({ darkMode, setDarkMode }) => {
   const [gastroenterologyPatients, setGastroenterologyPatients] = useState([]);
   const [orthopedicsPatients, setOrthopedicsPatients] = useState([]);
   const [surgeryPatients, setSurgeryPatients] = useState([]);
+  const [appointmentsOnMonday, setAppointmentsOnMonday] = useState(0);
+  const [appointmentsOnTuesday, setAppointmentsOnTuesday] = useState(0);
+  const [appointmentsOnWednesday, setAppointmentsOnWednesday] = useState(0);
+  const [appointmentsOnThursday, setAppointmentsOnThursday] = useState(0);
+  const [appointmentsOnFriday, setAppointmentsOnFriday] = useState(0);
+  const [appointmentsOnSaturday, setAppointmentsOnSaturday] = useState(0);
+  const [appointmentsOnSunday, setAppointmentsOnSunday] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
   const id = localStorage.getItem("user ID");
   const isAuthenticated = localStorage.getItem("isAuthenticated");
@@ -38,6 +48,42 @@ const Dashboard = ({ darkMode, setDarkMode }) => {
     setDoctorsCount(res.data.totalDoctors);
     setPatientsData(res.data.allPatients);
     setDepartmentsCount(res.data.totalDepartments);
+    setAppointmentsCount(res.data.totalAppointments);
+    setAppointmentsOnMonday(
+      res.data.appointmentsData.filter(
+        (appointment) => dateFormat(appointment.date, "ddd") === "Mon"
+      )
+    );
+    setAppointmentsOnTuesday(
+      res.data.appointmentsData.filter(
+        (appointment) => dateFormat(appointment.date, "ddd") === "Tue"
+      )
+    );
+    setAppointmentsOnWednesday(
+      res.data.appointmentsData.filter(
+        (appointment) => dateFormat(appointment.date, "ddd") === "Wed"
+      )
+    );
+    setAppointmentsOnThursday(
+      res.data.appointmentsData.filter(
+        (appointment) => dateFormat(appointment.date, "ddd") === "Thu"
+      )
+    );
+    setAppointmentsOnFriday(
+      res.data.appointmentsData.filter(
+        (appointment) => dateFormat(appointment.date, "ddd") === "Fri"
+      )
+    );
+    setAppointmentsOnSaturday(
+      res.data.appointmentsData.filter(
+        (appointment) => dateFormat(appointment.date, "ddd") === "Sat"
+      )
+    );
+    setAppointmentsOnSunday(
+      res.data.appointmentsData.filter(
+        (appointment) => dateFormat(appointment.date, "ddd") === "Sun"
+      )
+    );
     setCardiologyPatients(
       res.data.allPatients.filter((item) => item.department === "Cardiology")
     );
@@ -75,14 +121,22 @@ const Dashboard = ({ darkMode, setDarkMode }) => {
   }, []);
 
   const appointmentsData = {
-    labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
+    labels: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
     datasets: [
       {
         label: "Appointments",
         backgroundColor: "rgba(75,192,192,1)",
         borderColor: "rgba(0,0,0,1)",
         borderWidth: 2,
-        data: [65, 59, 80, 81, 56, 55],
+        data: [
+          appointmentsOnMonday.length,
+          appointmentsOnTuesday.length,
+          appointmentsOnWednesday.length,
+          appointmentsOnThursday.length,
+          appointmentsOnFriday.length,
+          appointmentsOnSaturday.length,
+          appointmentsOnSunday.length,
+        ],
       },
     ],
   };
@@ -205,9 +259,14 @@ const Dashboard = ({ darkMode, setDarkMode }) => {
                         </div>
 
                         <div className="col-md-3 flex-auto">
-                          <div className="card card-counter danger flex-auto">
+                          <div
+                            className="card card-counter danger flex-auto"
+                            onClick={() => navigate("/viewappointments")}
+                          >
                             <i className="fa fa-calendar"></i>
-                            <span className="count-numbers">75</span>
+                            <span className="count-numbers">
+                              {appointmentsCount}
+                            </span>
                             <span className="count-name">Appointments</span>
                           </div>
                         </div>
@@ -216,9 +275,12 @@ const Dashboard = ({ darkMode, setDarkMode }) => {
                       {/* 2nd row */}
                       <div className="row flex-auto mb-4">
                         <div className="col-md-6 flex-auto">
-                          <div className="card flex-auto h-full">
+                          <div
+                            className="card flex-auto h-full"
+                            onClick={() => navigate("/viewappointments")}
+                          >
                             <div className="card-header">
-                              Appointments Over Time
+                              Appointments In recent Time
                             </div>
                             <div className="card-body">
                               <Bar
@@ -243,7 +305,10 @@ const Dashboard = ({ darkMode, setDarkMode }) => {
                         </div>
 
                         <div className="col-md-6 flex-auto">
-                          <div className="card flex-auto h-full ">
+                          <div
+                            className="card flex-auto h-full "
+                            onClick={() => navigate("/viewpatients")}
+                          >
                             <div className="card-header">
                               Patients by Department
                             </div>

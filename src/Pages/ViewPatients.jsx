@@ -615,7 +615,7 @@ const ViewPatients = ({ notify, errorToast, darkMode, setDarkMode }) => {
                           <th scope="col">Emergency Contact Name</th>
                           <th scope="col">Emergency Contact Number</th>
                           <th scope="col">Emergency Contact Relation</th>
-                          <th scope="col">Created on</th>
+                          {/* <th scope="col">Created on</th> */}
                           <th scope="col">Action</th>
                         </tr>
                       </thead>
@@ -638,9 +638,9 @@ const ViewPatients = ({ notify, errorToast, darkMode, setDarkMode }) => {
                               <td>{patient.emergencyContactName}</td>
                               <td>{patient.emergencyContactNumber}</td>
                               <td>{patient.emergencyContactRelation}</td>
-                              <td>
+                              {/* <td>
                                 {dateFormat(patient.createdAt, "dd/mm/yyyy")}
-                              </td>
+                              </td> */}
                               <td>
                                 <div>
                                   <button
