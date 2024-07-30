@@ -240,14 +240,14 @@ const ViewAppointments = ({ notify, errorToast, darkMode, setDarkMode }) => {
           ) : (
             <div>
               <div
-                className={`flex h-screen flex-grow-1 ${
+                className={`flex flex-grow-1 ${
                   darkMode ? "bg-dark text-white" : "bg-gray-200"
                 }`}
               >
                 <Sidebar darkMode={darkMode} setDarkMode={setDarkMode} />
-                <div className="flex-1 h-screen flex flex-col">
+                <div className="flex-1 flex flex-col">
                   <Navbar darkMode={darkMode} />
-                  <div className=" container-fluid h-screen main-content">
+                  <div className=" container-fluid main-content">
                     <div className="d-flex justify-content-between align-items-center mt-2 mb-3">
                       <div className="col"></div>
                       <div className="col-auto">
