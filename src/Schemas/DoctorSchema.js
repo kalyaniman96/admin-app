@@ -4,7 +4,7 @@ const doctorSchema = Yup.object().shape({
   name: Yup.string().required("Name is required"),
   email: Yup.string().required("Email is required"),
   phone: Yup.string().required("Phone is required"),
-  department: Yup.string().required("Department is required"),
+  department: Yup.string().required("Select department"),
 
   // gender: Yup.string().required("Gender is required"),
   qualification: Yup.string().required("Qualification is required"),

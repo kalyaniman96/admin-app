@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import dateFormat from "dateformat";
-import appointmentSchema from "../Schemas/DepartmentSchema";
+import appointmentSchema from "../Schemas/AppointmentSchema";
 import Sidebar from "../Components/Sidebar";
 import Navbar from "../Components/Navbar";
 import { useFormik } from "formik";
@@ -25,8 +25,8 @@ const ViewAppointments = ({ notify, errorToast, darkMode, setDarkMode }) => {
   const [departmentName, setDepartmentName] = useState([]);
   //to select a department in the modal
   const [selectedDepartment, setSelectedDepartment] = useState("");
-  //to select department in the top right select box for pagination
-  const [departmentSelected, setDepartmentSelected] = useState("");
+  // for date based search of appointments
+  const [selectedDate, setSelectedDate] = useState("");
   const [doctors, setDoctors] = useState([]);
   const [patients, setPatients] = useState([]);
   // const [date, setDate] = useState("");
@@ -123,9 +123,7 @@ const ViewAppointments = ({ notify, errorToast, darkMode, setDarkMode }) => {
     const indexOfFirstAppointment =
       indexOfLastAppointment - appointmentsPerPage;
     const filteredAppointments = appointments.filter((appointment) =>
-      appointment.department
-        .toLowerCase()
-        .includes(departmentSelected.toLowerCase())
+      appointment.date.includes(selectedDate)
     );
     setDisplayedAppointments(
       filteredAppointments.slice(
@@ -133,13 +131,11 @@ const ViewAppointments = ({ notify, errorToast, darkMode, setDarkMode }) => {
         indexOfLastAppointment
       )
     );
-  }, [currentPage, appointments, departmentSelected]);
+  }, [currentPage, appointments, selectedDate]);
 
   const totalPages = Math.ceil(
     appointments.filter((appointment) =>
-      appointment.department
-        .toLowerCase()
-        .includes(departmentSelected.toLowerCase())
+      appointment.date.includes(selectedDate)
     ).length / appointmentsPerPage
   );
 
@@ -185,7 +181,9 @@ const ViewAppointments = ({ notify, errorToast, darkMode, setDarkMode }) => {
   };
 
   const handleReset = () => {
-    formik.resetForm({});
+    formik.handleReset({});
+    setDoctors([]);
+    setPatients([]);
   };
 
   // createAppointment form handling
@@ -196,7 +194,7 @@ const ViewAppointments = ({ notify, errorToast, darkMode, setDarkMode }) => {
       patient: "",
       date: "",
     },
-    // validationSchema: appointmentSchema,
+    validationSchema: appointmentSchema,
     onSubmit: async (values) => {
       try {
         const res = await axios.post("/appointment/create", values, {
@@ -264,22 +262,22 @@ const ViewAppointments = ({ notify, errorToast, darkMode, setDarkMode }) => {
                       </div>
                       <div className="col">
                         <div className="float-right relative z-0">
-                          <select
+                          <input
                             className={`form-select ${
                               darkMode ? "bg-gray-600 text-white" : ""
                             }`}
-                            value={departmentSelected}
-                            onChange={(e) =>
-                              setDepartmentSelected(e.target.value)
-                            }
-                          >
-                            <option value="">All departments</option>
+                            type="date"
+                            placeholder="Select date"
+                            value={selectedDate}
+                            onChange={(e) => setSelectedDate(e.target.value)}
+                          />
+                          {/* <option value="">All departments</option>
                             {departmentName.map((department) => (
                               <option key={department} value={department}>
                                 {department}
                               </option>
-                            ))}
-                          </select>
+                            ))} */}
+                          {/* </select> */}
                         </div>
                       </div>
                     </div>
