@@ -551,7 +551,7 @@ const DoctorsByDepartment = ({ notify, errorToast, darkMode, setDarkMode }) => {
                         />
                       </div>
                     </div>
-                    <div className="container-fluid">
+                    <div className="container-fluid p-2">
                       <div className="row d-flex justify-content-between">
                         <div className="col-auto">
                           <button onClick={() => navigate("/viewdepartments")}>

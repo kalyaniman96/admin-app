@@ -674,7 +674,7 @@ const ViewPatients = ({ notify, errorToast, darkMode, setDarkMode }) => {
                     </table>
                   </div>
 
-                  <div className="p-2">
+                  <div className="p-3">
                     <ResponsivePagination
                       previousLabel="Prev"
                       nextLabel="Next"
